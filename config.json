@@ -1,6 +1,5 @@
 {
-  "_comment": "This field tracks user login metrics",
-  "userId": 12345,
-  "_comment_2": "Remember to update this URL if the staging server moves",
-  "apiUrl": "https://example.com"
+  "Message": "Declare settings and hyperparameters for model"
+  
 }
+
