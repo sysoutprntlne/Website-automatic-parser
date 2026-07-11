@@ -2,7 +2,7 @@
 from unsloth import FastLanguageModel
 import torch
 import mlx
-#If i can build model, how? 
+#If i can build model, how?
 
 model, tokenizer = FastLanguageModel.from_pretrained(
     model_name = "unsloth/llama-3.1-8b-unsloth-bnb-4bit",
@@ -12,10 +12,10 @@ model, tokenizer = FastLanguageModel.from_pretrained(
 )
 
 model = FastLanguageModel.get_peft_model(
-    model, 
-    r= 16, 
-    target_mod = ["q_proj", "k_proj", "v_proj", "o_proj",
-                 "gate_proj", "up_proj", "down_proj"],
+    model,
+    r= 16,
+    target_mod = ["q_proj", "k_proj", "v_proj", "o_proj"
+                ,"gate_proj", "up_proj", "down_proj"],
     lora_alpha = 16,
     lora_dropout = 0,
     bias = "none",
@@ -26,4 +26,4 @@ model = FastLanguageModel.get_peft_model(
 )
 
 ## LORA APPLIED (QUANTIZED) 6005 bits /per weight
-# NEED TO complete finetuning 
+# NEED TO complete finetuning
