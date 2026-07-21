@@ -25,5 +25,6 @@ model = FastLanguageModel.get_peft_model(
     loftq_config = None,
 )
 
+
 ## LORA APPLIED (QUANTIZED) 6005 bits /per weight
 # NEED TO complete finetuning
