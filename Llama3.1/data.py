@@ -1,30 +1,22 @@
 # Install dependencies as needed:
 # pip install kagglehub[pandas-datasets]
 
-import kaggle
 import kagglehub
 from kagglehub import KaggleDatasetAdapter
-import pandas as pd
-import csv
-
+import pandas
 from tokenizers import (
-    decoders,
     models,
     normalizers,
     pre_tokenizers,
-    processors,
     trainers,
     Tokenizer,
+    
 )
 
 # Download latest version
 
 
 #== DATA FOR TOKENIZER TRAINING ==
-
-# Set the path to the file you'd like to load
-file_path = "lexor_dataset_conversations.csv"
-
 
 # Load the latest version
 df = kagglehub.load_dataset(
@@ -36,17 +28,56 @@ KaggleDatasetAdapter.PANDAS,
 
 #View the default number of rows (first 5 rows)
 
-print(df.columns)
-
-text_example = df["text"].iloc[1000]
 
 #== TOKENIZER BUILD ==
+sample_text = df["text"].iloc[0]
 
 
+#normalizer
 tokenizer = Tokenizer(models.BPE())
-
 tokenizer.normalizer = normalizers.BertNormalizer()
 
-print(tokenizer.normalizer.normalize_str(text_example))
+#Pre-tokenize
+tokenizer.pre_tokenizer = pre_tokenizers.BertPreTokenizer()
 
-#Find a way to insert data into tokenizer
+
+from tokenizers.processors import TemplateProcessing
+
+tokenizer.post_processor = TemplateProcessing(
+    single="[CLS] $A [SEP]",
+    pair="[CLS] $A [SEP] $B:1 [SEP]:1",
+    special_tokens=[("[CLS]", 1), ("[SEP]", 2)],
+)
+
+#pre-training tokenizer
+
+trainer = trainers.BpeTrainer(
+    vocab_size=25000,
+    special_tokens=[
+        "[PAD]",
+        "[UNK]",
+        "[CLS]",
+        "[SEP]",
+        "[MASK]"
+    ]
+)
+
+#a function that calls batches to create streaming
+
+
+
+
+def batch_tokenizer_training():
+    
+    batch_size = 1000
+    for i in range(0, len(df), batch_size):
+        yield df["text"].iloc[i:i+batch_size].tolist()
+        
+        print(1)
+    
+        
+        #it gets smaller every time
+tokenizer.train_from_iterator(batch_tokenizer_training(), trainer=trainer, length = len(df))
+        
+tokenizer.save("Llama3.1/BPE-tokens.json")
+#total dataset size is 176154
