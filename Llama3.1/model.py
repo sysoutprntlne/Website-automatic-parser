@@ -2,7 +2,9 @@
 from unsloth import FastLanguageModel
 import torch
 import mlx
-#If i can build model, how?
+
+from BPE_tokenizer import get_tokenizer
+
 
 model, tokenizer = FastLanguageModel.from_pretrained(
     model_name = "unsloth/llama-3.1-8b-unsloth-bnb-4bit",
@@ -10,6 +12,8 @@ model, tokenizer = FastLanguageModel.from_pretrained(
     load_in_4bit = True,
     dtype = None,
 )
+
+tokenizer = get_tokenizer()
 
 model = FastLanguageModel.get_peft_model(
     model,
@@ -25,6 +29,13 @@ model = FastLanguageModel.get_peft_model(
     loftq_config = None,
 )
 
+#Data preprcessing
+
+
+
 
 ## LORA APPLIED (QUANTIZED) 6005 bits /per weight
 # NEED TO complete finetuning
+
+
+#Goal is to apply tokenizer to model, get data to train model and train
