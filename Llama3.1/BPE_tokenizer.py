@@ -30,8 +30,6 @@ KaggleDatasetAdapter.PANDAS,
 
 
 #== TOKENIZER BUILD ==
-sample_text = df["text"].iloc[0]
-
 
 #normalizer
 tokenizer = Tokenizer(models.BPE())
@@ -69,11 +67,12 @@ def batch_tokenizer_training():
     for i in range(0, len(df), batch_size):
         yield df["text"].iloc[i:i+batch_size].tolist()
         
-        print(1)
-    
+        
         
         #it gets smaller every time
 tokenizer.train_from_iterator(batch_tokenizer_training(), trainer=trainer, length = len(df))
+        
+        
         
 tokenizer.save("Llama3.1/BPE-tokens.json")
 #total dataset size is 176154
