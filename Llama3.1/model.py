@@ -1,6 +1,5 @@
 
 from unsloth import FastLanguageModel
-from unsloth.chat_templates import get_chat_template
 from datasets import load_dataset
 from unsloth.trainer import UnslothTrainer
 from transformers import TrainingArguments
@@ -48,9 +47,10 @@ model_trainer = UnslothTrainer(
         
 )
 
-
-model_trainer.train()
-
+try:
+    model_trainer.train()
+except:
+    print("does not work")
 #Data preprcessing
 
 #build of tokenizer
