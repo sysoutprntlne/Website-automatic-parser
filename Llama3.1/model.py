@@ -1,11 +1,9 @@
 
 from unsloth import FastLanguageModel
-import torch
-import mlx
-
-from BPE_tokenizer import get_tokenizer
-
-
+from unsloth.chat_templates import get_chat_template
+from datasets import load_dataset
+from unsloth.trainer import UnslothTrainer
+from transformers import TrainingArguments
 model, tokenizer = FastLanguageModel.from_pretrained(
     model_name = "unsloth/llama-3.1-8b-unsloth-bnb-4bit",
     max_seq_length = 2048,
@@ -13,7 +11,6 @@ model, tokenizer = FastLanguageModel.from_pretrained(
     dtype = None,
 )
 
-tokenizer = get_tokenizer()
 
 model = FastLanguageModel.get_peft_model(
     model,
@@ -29,9 +26,47 @@ model = FastLanguageModel.get_peft_model(
     loftq_config = None,
 )
 
+#Data import
+
+ds = load_dataset("lmsys/lmsys-chat-1m")
+ds = ds.map((lambda x: {"text": x["conversations"][0]["value"]}))
+
+# Model training
+
+model_trainer = UnslothTrainer(
+    
+    model =model,
+    tokenizer =tokenizer,
+    train_dataset =ds,
+    dataset_text_field ="text",
+    max_seq_length =2048,
+    args=TrainingArguments(
+        output_dir="outputs",
+        per_device_train_batch_size=2,
+        num_train_epochs=1,
+    ),
+        
+)
+
+
+model_trainer.train()
+
 #Data preprcessing
 
+#build of tokenizer
+"""tokenizers = tokenizers.Tokenizer
 
+tokenizer =  get_chat_template(
+    tokenizer,
+    chat_template = "llama-3.1", # change this to the right chat_template name
+)
+
+
+def data_preprocessing_Func(data):
+    convo_Data = data["Conversation"]
+    text = tokenizer.ap
+    
+"""
 
 
 ## LORA APPLIED (QUANTIZED) 6005 bits /per weight
