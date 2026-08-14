@@ -1,7 +1,6 @@
-
+import sqlite3
 from ollama import chat
 from ollama import ChatResponse
-from email_snatch import quickstart
 content = ""
 
 
@@ -15,4 +14,6 @@ print(response['message']['content'])
 # or access fields directly from the response object
 print(response.message.content)
 
+
+#SQL connection
 
