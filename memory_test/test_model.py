@@ -1,4 +1,3 @@
-import sqlite3
 from ollama import chat
 from ollama import ChatResponse
 content = ""
