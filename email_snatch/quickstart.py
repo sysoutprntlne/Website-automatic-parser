@@ -23,19 +23,19 @@ creds = None
   # The file token.json stores the user's access and refresh tokens, and is
   # created automatically when the authorization flow completes for the first
   # time.
-if os.path.exists("token.json"):
-    creds = Credentials.from_authorized_user_file("token.json", SCOPES)
+if os.path.exists("email_snatch/token.json"):
+    creds = Credentials.from_authorized_user_file("email_snatch/token.json", SCOPES)
   # If there are no (valid) credentials available, let the user log in.
 if not creds or not creds.valid:
     if creds and creds.expired and creds.refresh_token:
       creds.refresh(Request())
     else:
       flow = InstalledAppFlow.from_client_secrets_file(
-          "credentials.json", SCOPES
+          "email_snatch/credentials.json", SCOPES
       )
       creds = flow.run_local_server(port=0)
     # Save the credentials for the next run
-    with open("token.json", "w") as token:
+    with open("email_snatch/token.json", "w") as token:
       token.write(creds.to_json())
 
     service = build("gmail", "v1", credentials=creds)
@@ -89,6 +89,8 @@ def give_message_back(input):
      
      message.set_content(input)
      
+     
+     # Customizable inputs (WHO AND WHO FROM )
      message["Subject"] = "Example"
      message["To"] = "jun.olea1000@gmail.com"
      message["From"] = "peter1999grif@gmail.com"
@@ -114,4 +116,4 @@ def give_message_back(input):
 # Where main action code starts
 #=============================
 
-give_message_back("this is an !")
+grab_messages_list()
