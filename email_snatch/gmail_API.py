@@ -5,8 +5,9 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 from colorama import Fore, Back, Style, init
-import requests
-
+from email.message import EmailMessage
+from googleapiclient.discovery import build
+from googleapiclient.errors import HttpError
 import base64
 
 # If modifying these scopes, delete the file token.json.
@@ -37,11 +38,12 @@ if not creds or not creds.valid:
     # Save the credentials for the next run
     with open("email_snatch/token.json", "w") as token:
       token.write(creds.to_json())
-
-    service = build("gmail", "v1", credentials=creds)
+    
+service = build("gmail", "v1", credentials=creds)
 
 
 def grab_messages_list():
+  
     """Shows basic usage of the Gmail API.
     Lists the user's Gmail messages.
     """
@@ -52,14 +54,15 @@ def grab_messages_list():
             service.users().messages().list(userId="me", labelIds=["INBOX"]).execute()
         )
         messages = results.get("messages", [])
-
         if not messages:
             print("No messages found.")
             return
 
         print("Messages:")
         for message in messages:
+        
             print(f'Message ID: {message["id"]}')
+            
             msg = (
                 service.users().messages().get(userId="me", id=message["id"]).execute()
             )
@@ -68,21 +71,15 @@ def grab_messages_list():
         # TODO(developer) - Handle errors from gmail API.
         print(f"An error occurred: {error}")
 
-import base64
-from email.message import EmailMessage
 
-import google.auth
-from googleapiclient.discovery import build
-from googleapiclient.errors import HttpError
+
 
 def give_message_back(input):
   #Send to a specific person automatically,
    try:
      
      service = build("Gmail", "v1", credentials= creds)
-     
      message = EmailMessage()
-     
      message.set_content(input)
      
      
