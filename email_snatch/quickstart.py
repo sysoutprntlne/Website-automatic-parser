@@ -75,10 +75,6 @@ import google.auth
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 
-
-
-
-
 def give_message_back(input):
   #Send to a specific person automatically,
    try:
@@ -95,7 +91,6 @@ def give_message_back(input):
      message["To"] = "jun.olea1000@gmail.com"
      message["From"] = "peter1999grif@gmail.com"
 
-     
      #Encoding
      
      message_encoded = base64.urlsafe_b64encode(message.as_bytes()).decode()
@@ -106,7 +101,6 @@ def give_message_back(input):
      )
 
      print(message["id"] + " message sent!")
-     
      
    except HttpError as boom:
      print("error occured: " + HttpError)
