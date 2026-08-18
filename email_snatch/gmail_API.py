@@ -72,10 +72,12 @@ def grab_messages_list():
             )
             
             message_list.append(msg["snippet"])
-            
     except HttpError as error:
         # TODO(developer) - Handle errors from gmail API.
         print(f"An error occurred: {error}")
+      
+      
+    print(message_list)
     return message_list
 
 
@@ -114,3 +116,4 @@ def give_message_back(input, subject, to):
 # Where main action code starts
 #=============================
 
+grab_messages_list()
