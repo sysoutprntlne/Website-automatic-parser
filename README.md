@@ -19,5 +19,7 @@ Create a seperate script for looking at emails
 
 Make model and feed it kaggle to learn how to use it
 
+<img width="168" height="148" alt="image" src="https://github.com/user-attachments/assets/9efe2b4b-620a-4155-b440-a2548666e255" />
+
 
 
