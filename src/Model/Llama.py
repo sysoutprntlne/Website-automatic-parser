@@ -9,9 +9,9 @@ from chromadb.utils.embedding_functions import OpenAIEmbeddingFunction
 from chromadb.utils.embedding_functions import DefaultEmbeddingFunction
 from ollama import chat
 from ollama import ChatResponse
-import src.Model.eval_model.eval as evaluation
+import src.eval_model.eval as evaluation
 #Added email function in order to access functions such as sending messages
-import src.Model.Gmail._reader as email_func
+import src.Gmail._reader as email_func
 
 #Model -> Prompting, persistent memory, build
 
