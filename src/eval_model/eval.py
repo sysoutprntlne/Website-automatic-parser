@@ -1,17 +1,17 @@
-#task is to talk to model and determine what it needs to fix to become correct
+# task is to talk to model and determine what it needs to fix to become correct
 from ollama import chat
 from ollama import ChatResponse
 import src.Model.Llama as evaluation
 
 good_output = "API Documentation;samuel@gmail.com;daniel@gmail.com;Hi Daniel, could you send me the latest version of the API documentation when you get a chance? I want to make sure I'm working with the most recent version."
-with open("Model\memoryDB\pirate.json", "r", encoding= "utf-8") as file:
-        vector_library = file.read()
-    
-    
+with open("Model\memoryDB\pirate.json", "r", encoding="utf-8") as file:
+    vector_library = file.read()
 
-    #Initalization 
-    
+
+# Initalization
+
 user_document = vector_library
+
 
 def eval_model(model_output):
 
@@ -76,15 +76,20 @@ def eval_model(model_output):
 
     Output ONLY PASS or FAIL followed by the reason.
     """
-    response: ChatResponse = chat(model='llama3.1', messages=[
-        {
-            'role': 'user',
-            'content': evaluator_prompt,
-        },
-        ])
-        
-        #Splitting the response into different categories 
-          
+    response: ChatResponse = chat(
+        model="llama3.1",
+        messages=[
+            {
+                "role": "user",
+                "content": evaluator_prompt,
+            },
+        ],
+    )
+
+    # Splitting the response into different categories
+
     response_output = response.message.content
     print(response_output)
-    responding_evaluation = evaluation.personality_taker(input_msg_array=response_output)
+    responding_evaluation = evaluation.personality_taker(
+        input_msg_array=response_output
+    )

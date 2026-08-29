@@ -1,16 +1,3 @@
-import src.Gmail._reader as gmail_
-import src.Model.Llama as AI_MODEL
-# Gmail --> Get emails, send to model, model take code and responds, 
-# Send emails seperately
+def main():
 
-
-
-message_list_ = gmail_.grab_messages_list()
-
-test = AI_MODEL.personality_taker(input_msg_array=message_list_)
-
-
-
-
-
-
+    return 99
