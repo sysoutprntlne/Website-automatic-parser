@@ -1,5 +1,5 @@
-import email_snatch.gmail_API as gmail_
-import Model.Llama as AI_MODEL
+import src.Model.Gmail._reader as gmail_
+import src.Model.Llama as AI_MODEL
 # Gmail --> Get emails, send to model, model take code and responds, 
 # Send emails seperately
 
