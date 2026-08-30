@@ -1,5 +1,5 @@
 .venv/
 .env/
-lib/credentials/credentials.json
+lib/cred/credentials.json
 src/Model/BPE-tokens.json
 src/Model/config.json

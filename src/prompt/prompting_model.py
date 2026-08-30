@@ -6,14 +6,12 @@
 # Getting the prompt for model
 
 
-def get_prompt():
+def get_prompt(context):
     prompt = f"""
             
         
         Write this email with the goal to match their personality. Match the style in the provided context. Keep it natural, concise, and do not invent information.
 
-        Return ONLY:
-        ;subject;from;to;message
 
             These returned values must be filled with the information it is labeled as. do not include the labels with it.
 
@@ -22,10 +20,9 @@ def get_prompt():
             Evaluate in the end that you correctly answered the prompt.
 
         CONTEXT:
-        
+        {context}
         """
     return prompt
-
 
 # split the output prompt into email format
 def prompt_splitting(response_output):

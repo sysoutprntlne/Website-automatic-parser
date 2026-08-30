@@ -6,7 +6,7 @@ import src.Gmail.reader as email_func
 import src.prompt.prompting_model as promptM
 # Model -> Prompting, persistent memory, build
 
-import src.Memory.memoryDB.Vector_lib as memory
+import src.Model.memry.Vector_lib as memory
 
 # ===============
 input_message = email_func.grab_messages_list()
@@ -15,7 +15,7 @@ collection = client.get_or_create_collection("chromaDB")
 
 
 # Getting response output of model
-def Llama_model_():
+def Llama_model():
     print("evaluation starting")
 
     response: ChatResponse = chat(

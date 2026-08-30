@@ -1,22 +1,16 @@
-import os.path
 
-from google.auth.transport.requests import Request
-from google.oauth2.credentials import Credentials
-from google_auth_oauthlib.flow import InstalledAppFlow
-from googleapiclient.discovery import build
-from googleapiclient.errors import HttpError
-from googleapiclient.discovery import build
-from googleapiclient.errors import HttpError
 
-from client import gmail_cred_auth
+from googleapiclient.errors import HttpError
+from client import gmail
+
 # If modifying these scopes, delete the file token.json.
 
 
+new_auth = gmail("https://www.googleapis.com/auth/gmail.readonly")
 
+def grab_messages_list(service) -> str:
 
-def grab_messages_list(service):
-
-    gmail_cred_auth()
+    
     """Shows basic usage of the Gmail API.
     Lists the user's Gmail messages.
     """
@@ -48,4 +42,3 @@ def grab_messages_list(service):
 # Where main action code starts
 # =============================
 
-grab_messages_list(gmail_cred_auth())
