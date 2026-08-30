@@ -1,20 +1,14 @@
 
-
-
-from Gmail import sender, reader
-from src.Gmail.client import gmail
-from eval_model import evaluate_model
-from model.memory import VectorLib
-from prompt import prompting_model
-#Flow from auth -> Gmail message into model -> model output -> gmail -> 
-
+from Gmail.client import gmail
+from eval_model.eval import eval_model
+from Model.memry.Vector_lib import get_vector_library
+from prompt.prompting_model import get_prompt, prompt_splitting
 
 def main():
     
     #First authenicate 
-    gmail_auth = gmail()
-    creds, service = gmail_auth.gmail_cred_auth()
-
+    test_auth = gmail(["https://www.googleapis.com/auth/gmail.readonly", "https://www.googleapis.com/auth/gmail.send"])
+    test_auth.gmail_cred_auth()
 
 
 
@@ -22,5 +16,4 @@ def main():
 
 
 #===============
-print("hellow")
 main()

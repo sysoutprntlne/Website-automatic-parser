@@ -1,19 +1,16 @@
 # task is to talk to model and determine what it needs to fix to become correct
 from ollama import chat
 from ollama import ChatResponse
-import src.Model.Llama as evaluation
-
-good_output = "API Documentation;samuel@gmail.com;daniel@gmail.com;Hi Daniel, could you send me the latest version of the API documentation when you get a chance? I want to make sure I'm working with the most recent version."
-with open("Model\memoryDB\pirate.json", "r", encoding="utf-8") as file:
-    vector_library = file.read()
-
-
-# Initalization
-
-user_document = vector_library
-
+import Model.Llama as evaluation
 
 def eval_model(model_output):
+    
+        
+    good_output = "API Documentation;samuel@gmail.com;daniel@gmail.com;Hi Daniel, could you send me the latest version of the API documentation when you get a chance? I want to make sure I'm working with the most recent version."
+    with open("Model\memoryDB\pirate.json", "r", encoding="utf-8") as file:
+        vector_library = file.read()
+        user_document = vector_library
+
 
     evaluator_prompt = f"""
     You are an evaluator for a personality-based AI.

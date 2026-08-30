@@ -2,20 +2,23 @@ import chromadb
 from ollama import chat
 from ollama import ChatResponse
 
-import src.Gmail.reader as email_func
-import src.prompt.prompting_model as promptM
+import Gmail.reader as email_func
+import prompt.prompting_model as promptM
 # Model -> Prompting, persistent memory, build
 
-import src.Model.memry.Vector_lib as memory
+import Model.memry.Vector_lib as memory
 
 # ===============
-input_message = email_func.grab_messages_list()
-client = chromadb.PersistentClient("./chromaDB")
-collection = client.get_or_create_collection("chromaDB")
+
+
+
 
 
 # Getting response output of model
 def Llama_model():
+    
+    
+    
     print("evaluation starting")
 
     response: ChatResponse = chat(

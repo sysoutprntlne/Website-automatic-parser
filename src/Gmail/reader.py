@@ -1,7 +1,7 @@
 
 
 from googleapiclient.errors import HttpError
-from client import gmail
+from Gmail.client import gmail
 
 # If modifying these scopes, delete the file token.json.
 
