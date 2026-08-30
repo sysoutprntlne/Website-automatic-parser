@@ -9,43 +9,9 @@ from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 import base64
 
-SCOPES = ["https://www.googleapis.com/auth/gmail.send"]
-creds = None
-
-
-if os.path.exists("email_snatch/token.json"):
-    creds = Credentials.from_authorized_user_file("email_snatch/token.json", SCOPES)
-
-# If there are no (valid) credentials available, let the user log in.
-if not creds or not creds.valid:
-    if creds and creds.expired and creds.refresh_token:
-        creds.refresh(Request())
-
-    else:
-        flow = InstalledAppFlow.from_client_secrets_file(
-            "email_snatch/credentials.json", SCOPES
-        )
-
-        creds = flow.run_local_server(port=0)
-
-    # Save the credentials for the next run
-    with open("email_snatch/token.json", "w") as token:
-        token.write(creds.to_json())
-
-service = build("gmail", "v1", credentials=creds)
-
-
-def custom_message(Subject, to):
-
-    message = []
-
-    message["Subject"] = Subject
-    message["To"] = to
-    message["From"] = "Frompeter1999grif@gmail.com"
-
 
 # Give message back to user
-def give_message_back(input, subject, to):
+def send_gmail_msg( input, subject, to):
     try:
         service = build("Gmail", "v1", credentials=creds)
         message = EmailMessage()
@@ -67,3 +33,9 @@ def give_message_back(input, subject, to):
 
 
 print("function executed")
+
+
+
+
+
+send_gmail_msg("Example", "subject example",  )

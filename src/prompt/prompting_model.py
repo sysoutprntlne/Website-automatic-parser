@@ -37,3 +37,4 @@ def prompt_splitting(response_output):
     to = splitting[5]
 
     print("input: " + input, "\n", "subject:  " + subject, "\n", "to: " + to)
+
