@@ -1,3 +1,5 @@
+import json
+
 # Utilize this file to house
 
 # Where all prompting functions live;
@@ -6,7 +8,7 @@
 # Getting the prompt for model
 
 
-def get_prompt(context):
+def get_prompt(context, personality):
     prompt = f"""
             
         
@@ -14,13 +16,14 @@ def get_prompt(context):
 
 
             These returned values must be filled with the information it is labeled as. do not include the labels with it.
-
-            Exactly 4 fields separated by 3 semicolons. No labels, explanations, quotes, or extra text.
             
             Evaluate in the end that you correctly answered the prompt.
 
         CONTEXT:
         {context}
+        
+        personality:
+        {personality}
         """
     return prompt
 
@@ -31,7 +34,17 @@ def prompt_splitting(response_output):
 
     input = splitting[6]
     subject = splitting[3]
-    to = splitting[5]
+    to = splitting[5] 
 
     print("input: " + input, "\n", "subject:  " + subject, "\n", "to: " + to)
 
+def get_personality(character):
+    
+    with open(character, "r") as file:
+        data = json.load(file)
+
+    json_string = json.dumps(data, indent=4)
+    return json_string
+
+personality = get_personality("src\Model\memry\pirate.json")
+get_prompt("example text", personality)

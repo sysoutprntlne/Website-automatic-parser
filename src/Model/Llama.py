@@ -15,22 +15,23 @@ import Model.memry.Vector_lib as memory
 
 
 # Getting response output of model
-def Llama_model():
+def Llama_model(input):
     
     
     
-    print("evaluation starting")
+    print("Model start")
+
 
     response: ChatResponse = chat(
         model="llama3.1",
         messages=[
             {
                 "role": "user",
-                "content": promptM.get_prompt(),
+                "content": input,
             },
         ],
     )
-    response_output = response.message.content
+    response_output = str(response.message.content)
 
     print(response_output)
     return response_output

@@ -1,4 +1,4 @@
-from client import gmail
+from Gmail.client import gmail
 from googleapiclient.errors import HttpError
 from email.message import EmailMessage
 import base64
