@@ -10,12 +10,16 @@ new_auth = gmail("https://www.googleapis.com/auth/gmail.readonly")
 
 def grab_messages_list(service) -> str:
 
+    print("Grabbing message history")
     
     """Shows basic usage of the Gmail API.
     Lists the user's Gmail messages.
     """
     message_list = []
-
+    contact_list = []
+    
+    recipant = []
+    sender = []
     try:
         # Call the Gmail API
         results = (
@@ -31,12 +35,25 @@ def grab_messages_list(service) -> str:
             )
 
             message_list.append(msg["snippet"])
+        results = (
+                service.users().messages().list(userId="me", labelIds=["INBOX"]).execute()
+            )
+        messages = results.get("messages", [])
+
+        for message in messages:
+            msg = (
+                service.users().messages().get(userId="me", id=message["id"]).execute()
+            )
+
+            contact_list.append(msg["payload"]["headers"])
+            
+
     except HttpError as error:
         # TODO(developer) - Handle errors from gmail API.
         print(f"An error occurred: {error}")
 
-    print(message_list)
-    return message_list
+    
+    return contact_list, message_list
 
 
 # Where main action code starts

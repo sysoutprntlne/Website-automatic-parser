@@ -13,11 +13,10 @@ import Model.memry.Vector_lib as memory
 def Llama_model(input):
 
     class email(BaseModel):
-        From: str
-        To: str
-        Subject: str
-        input: str 
-    
+        
+        subject: str
+        output: str 
+        
     print("Model start")
 
 
@@ -30,12 +29,47 @@ def Llama_model(input):
                 
             },
         ],
-        format= email.model_json_schema()
+        format= email.model_json_schema(),
+        options={"temperature": 0}
     )
     
     email = email.model_validate_json(response.message.content)
     
-    print(email)
-    return email
+    output = email.output
+    subject = email.subject
+
+
+    return output, subject
 # =============== TEST CODE
 
+def message_format_model(contact_list, message_list):
+
+    input = f"Correctly sort messages, subject, to, and from. Raw message: {message_list} Raw Contact: {contact_list}" 
+
+    class format_model(BaseModel):
+        From: str
+        To: str
+        Message: str
+        Subject: str
+        
+    response: ChatResponse = chat(
+        model="llama3.1",
+        messages=[
+            {
+                "role": "user",
+                "content": "Correct find and parse the correct pairing emails and conversations ( From, To, message)",
+                
+            },
+        ],
+        format= format_model.model_json_schema(),
+        options={"temperature": 0}
+                
+    )
+    format_model = format_model.model_validate_json(response.message.content)
+    From = format_model.From
+    To = format_model.To
+    Message = format_model.Message
+    Subject = format_model.Subject
+    print(format_model)
+
+    return From, To, Message, Subject

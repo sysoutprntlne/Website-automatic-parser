@@ -8,7 +8,7 @@ import json
 # Getting the prompt for model
 
 
-def get_prompt(context, personality):
+def get_prompt(context, personality, From, to, subject):
     prompt = f"""
             
         
@@ -22,11 +22,19 @@ def get_prompt(context, personality):
         CONTEXT:
         {context}
         
+        from:
+        {From}
+        to:
+        {to}
+        
+        subject:
+        {subject}
+        
         personality:
         {personality}
         
-        The email of the person sending it is: jun.olea1000@gmail.com
         
+
         """
     return prompt
 
@@ -49,5 +57,3 @@ def get_personality(character):
     json_string = json.dumps(data, indent=4)
     return json_string
 
-personality = get_personality("src\Model\memry\pirate.json")
-get_prompt("example text", personality)
