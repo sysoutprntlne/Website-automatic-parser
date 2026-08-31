@@ -18,13 +18,13 @@ def __main__():
     
     #inject prompt
     
-    x = 5
-    for i in range(3):
+    
+    for i in range(1):
         
         personality = get_personality("src\Model\memry\pirate.json")
         prompt = get_prompt(i,personality)
         output = Llama_model(prompt)
-        send_gmail_msg(output,"example subject","jun.olea1000@gmail.com", "jun.olea1000@gmail.com" )
+        send_gmail_msg()
 
         
 

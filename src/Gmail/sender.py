@@ -3,23 +3,30 @@ from googleapiclient.errors import HttpError
 from email.message import EmailMessage
 import base64
 import sys
-
+from Model.Llama import Llama_model
 # Give message back to user
 
 
-def send_gmail_msg( input, subject, to, From):
+def send_gmail_msg():
 
     auth = gmail("https://www.googleapis.com/auth/gmail.send")
     service,creds = auth.gmail_cred_auth()
     
     try:
+        email = {}
+
+        
+        
         message = EmailMessage()
+        message.set_content(email["input"])
+        output_scheme = Llama_model(input)
         
-        message.set_content(input)
+        email = {}
         
-        message["Subject"] = subject
-        message["To"] = to
-        message["From"] = From
+        
+        message["Subject"] = email["Subject"]
+        message["To"] = email["To"]
+        message["From"] = email["From"]
         
         message_encoded = base64.urlsafe_b64encode(message.as_bytes()).decode()
         create_msg = {"raw": message_encoded}
@@ -38,4 +45,4 @@ def send_gmail_msg( input, subject, to, From):
     print("function executed")
 
 #+=================================================================
-
+send_gmail_msg()

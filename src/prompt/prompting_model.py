@@ -24,6 +24,9 @@ def get_prompt(context, personality):
         
         personality:
         {personality}
+        
+        The email of the person sending it is: jun.olea1000@gmail.com
+        
         """
     return prompt
 
