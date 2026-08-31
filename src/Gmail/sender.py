@@ -45,4 +45,3 @@ def send_gmail_msg():
     print("function executed")
 
 #+=================================================================
-send_gmail_msg()
