@@ -1,12 +1,7 @@
-import chromadb
 from ollama import chat
 from ollama import ChatResponse
 from pydantic import BaseModel
-import Gmail.reader as email_func
-import prompt.prompting_model as promptM
 # Model -> Prompting, persistent memory, build
-
-import Model.memry.Vector_lib as memory
 
 # ===============
 # Getting response output of model
@@ -42,7 +37,7 @@ def Llama_model(input):
     return output, subject
 # =============== TEST CODE
 
-def message_format_model(contact_list, message_list):
+def message_format_model(contact_list: list, message_list: list) -> str:
 
     input = f"Correctly sort messages, subject, to, and from. Raw message: {message_list} Raw Contact: {contact_list}" 
 
@@ -65,6 +60,7 @@ def message_format_model(contact_list, message_list):
         options={"temperature": 0}
                 
     )
+    
     format_model = format_model.model_validate_json(response.message.content)
     From = format_model.From
     To = format_model.To
