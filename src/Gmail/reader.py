@@ -18,8 +18,6 @@ def grab_messages_list(service) -> str:
     message_list = []
     contact_list = []
     
-    recipant = []
-    sender = []
     try:
         # Call the Gmail API
         results = (

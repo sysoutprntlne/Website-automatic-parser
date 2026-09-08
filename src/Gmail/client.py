@@ -41,6 +41,9 @@ class gmail:
             print("gmail_cred function executed")
             return service, creds
 
-        
+# Create
+    def gmail_contructor(auth: str):
+        service = auth.gmail_cred_auth()
+        return service
         
         

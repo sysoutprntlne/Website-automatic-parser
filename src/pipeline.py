@@ -4,16 +4,34 @@ from Gmail.client import gmail
 from Gmail.reader import grab_messages_list
 from Gmail.sender import send_gmail_msg
 from prompt.prompting_model import get_prompt, get_personality
-from Model.Llama import Llama_model,message_format_model
+from Model.Llama import Llama_model, message_format_model
 
 def __main__():
     
     #First authenicate 
     test_auth = gmail(["https://www.googleapis.com/auth/gmail.readonly", "https://www.googleapis.com/auth/gmail.send"])
-    service, creds = test_auth.gmail_cred_auth()
-    message_list, contact_list = grab_messages_list(service)
+    service = test_auth.gmail_cred_auth()
+    message_list, contact_list, *_ = grab_messages_list(service)
+    Person_data = "src\Model\memry\pirate.json"
+    personality = get_personality(Person_data)
+    prompt = get_prompt(personality)
     
-    personality = get_personality("src\Model\memry\pirate.json")
+    
+    
+    
+    #Build model, taking list as input, let be input, make it modeular
+
+    for i in range(3):
+    
+        (output, subject) = Llama_model(prompt)
+        
+        send_gmail_msg(output[i], test_auth[1] )
+    
+    
+    
+    # loop to repspond multiple times for each message
+    
+    
     
     
     for i in range(3):

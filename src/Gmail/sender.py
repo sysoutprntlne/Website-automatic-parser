@@ -1,42 +1,77 @@
-from Gmail.client import gmail
 from email.message import EmailMessage
 import base64
 import sys
-from Model.Llama import Llama_model, message_format_model
-# Give message back to user
+import logging
+from googleapiclient.errors import HttpError
+from retrying import retry
 
 
-def send_gmail_msg(prompt):
+# Main task: Give message back to user
 
-    auth = gmail("https://www.googleapis.com/auth/gmail.send")
-    service,creds = auth.gmail_cred_auth()
+logger = logging.getLogger(__name__)
+    
+#Retry logic for function (max attempts = 3)
+@ retry( stop_max_attempt_number = 3)
+def send_gmail_msg(prompt: str, service: str ) -> None:
     
     
-    try:
-        subject,output= Llama_model(prompt)
-        To, From = message_format_model(prompt)
+    #Assigns the message variables with prompt input
+    (subject, output, To, From, *_)  = len_check(prompt)
+    #Forms the general message
+    for _ in range(3):
+        try:
+            #Creates message object
+            message = EmailMessage()        
+            
+            message["Subject"] = subject
+            message["To"] = To
+            message["From"] = From
+            
+            message.set_content(output)
+            
+            
+            # Function for the encoding of the message
+            create_msg = encoding_process(message)
+            
+            
+            #Attempt for message to execute
+            API_response = (
+            service.users().messages().send(userId="me", body=create_msg).execute()
+            )
+
+            
+            print(API_response["id"] + " message sent!")
+            print("sending function was executed")
+            break
         
-        message = EmailMessage()        
         
-        message["Subject"] = subject
-        message["To"] = To
-        message["From"] = From
-        message.set_content(output)
-
-        message_encoded = base64.urlsafe_b64encode(message.as_bytes()).decode()
-        create_msg = {"raw": message_encoded}
-        message = (
-        service.users().messages().send(userId="me", body=create_msg).execute()
-        )
-
-
-        print(message["id"] + " message sent!")
-
-    except AttributeError as e:
-        print(f"error occured: {e}")
-        sys.exit
-
-
-    print("function executed")
+        except HttpError:
+            logger.exception("failed function: send_gmail_msg")      
 
 #+=================================================================
+
+
+# function for the encoding of message 
+def encoding_process(message: EmailMessage ) -> dict:
+
+    message_encoded = base64.urlsafe_b64encode(message.as_bytes()).decode()
+    create_msg = {"raw": message_encoded}
+    
+    return create_msg
+
+
+# Error handle for positional packaging
+def len_check(prompt: tuple) -> dict:
+
+    length = len(prompt)
+    
+    if length >= 4 :
+        subject,output,To,From = prompt[:4]
+
+    if length < 4:
+        print(f"Insufficent values in prompt. Only {length} values. ")
+        sys.exit()
+        
+    return subject,output,To,From
+
+        
