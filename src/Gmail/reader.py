@@ -6,9 +6,7 @@ from Gmail.client import gmail
 # If modifying these scopes, delete the file token.json.
 
 
-new_auth = gmail("https://www.googleapis.com/auth/gmail.readonly")
-
-def grab_messages_list(service) -> str:
+def grab_messages_list() -> str:
 
     print("Grabbing message history")
     
@@ -17,7 +15,7 @@ def grab_messages_list(service) -> str:
     """
     message_list = []
     contact_list = []
-    
+    service, *_ = gmail.gmail_cred_auth()
     try:
         # Call the Gmail API
         results = (
@@ -41,6 +39,7 @@ def grab_messages_list(service) -> str:
         for message in messages:
             msg = (
                 service.users().messages().get(userId="me", id=message["id"]).execute()
+                
             )
 
             contact_list.append(msg["payload"]["headers"])
@@ -50,7 +49,7 @@ def grab_messages_list(service) -> str:
         # TODO(developer) - Handle errors from gmail API.
         print(f"An error occurred: {error}")
 
-    
+    print(contact_list);print(message_list)
     return contact_list, message_list
 
 

@@ -8,7 +8,7 @@ import json
 # Getting the prompt for model
 
 
-def get_prompt(context, personality, From, to, subject):
+def get_prompt(context, personality, From, To, Subject):
     prompt = f"""
             
         
@@ -26,10 +26,10 @@ def get_prompt(context, personality, From, to, subject):
         from:
         {From}
         to:
-        {to}
+        {To}
         
         subject:
-        {subject}
+        {Subject}
         
         personality:
         {personality}
@@ -37,6 +37,7 @@ def get_prompt(context, personality, From, to, subject):
         
 
         """
+    print("prompt obtained")
     return prompt
 
 # split the output prompt into email format

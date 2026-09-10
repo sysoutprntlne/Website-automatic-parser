@@ -17,12 +17,12 @@ class Model:
             
             subject: str
             output: str 
-            
+
         print("Model start")
 
 
         response: ChatResponse = chat(
-            model="llama3.1",
+            model="llama3.2",
             messages=[
                 {
                     "role": "user",
@@ -37,11 +37,11 @@ class Model:
         email = email.model_validate_json(response.message.content)
         
         output = email.output
-        subject = email.subject
+        user_subject = email.subject
 
 
-        return output, subject
-    # =============== TEST CODE
+        print("Model has responded")
+        return output, user_subject
 
     def message_format_model(contact_list: list, message_list: list) -> str:
 
@@ -54,11 +54,11 @@ class Model:
             Subject: str
             
         response: ChatResponse = chat(
-            model="llama3.1",
+            model="llama3.2",
             messages=[
                 {
                     "role": "user",
-                    "content": "Correct find and parse the correct pairing emails and conversations ( From, To, message)",
+                    "content": "Correctly find and parse the correct pairing emails and conversations ( From, To, message)",
                     
                 },
             ],
@@ -73,6 +73,6 @@ class Model:
         Message = format_model.Message
         Subject = format_model.Subject
         
-        print(format_model)
+        print("message formatting complete")
 
-        return From, To, Message, Subject
+        return (From, To, Message, Subject)

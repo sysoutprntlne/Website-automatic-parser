@@ -11,15 +11,18 @@ from googleapiclient.discovery import build
     
 
 class gmail:
-    def __init__(self, SCOPES):
-        self.scope = SCOPES
-    def gmail_cred_auth(self):   
+    def __init__(self):
+        pass
+    def gmail_cred_auth():   
             # The file token.json stores the user's access and refresh tokens, and is
             # created automatically when the authorization flow completes for the first
             # time.
+            SCOPES = ["https://www.googleapis.com/auth/gmail.readonly", "https://www.googleapis.com/auth/gmail.send"]
+
+            creds = None
             
             if os.path.exists("lib/cred/token.json"):
-                creds = Credentials.from_authorized_user_file("lib/cred/token.json", self.scope)
+                creds = Credentials.from_authorized_user_file("lib/cred/token.json", SCOPES)
 
             # If there are no (valid) credentials available, let the user log in.
             if not creds or not creds.valid:
@@ -27,7 +30,7 @@ class gmail:
                     creds.refresh(Request())
                 else:
                     flow = InstalledAppFlow.from_client_secrets_file(
-                        "lib/cred/credentials.json", self.scope
+                        "lib/cred/credentials.json", SCOPES
                     )
 
                     creds = flow.run_local_server(port=0)
@@ -39,11 +42,6 @@ class gmail:
             service = build("gmail", "v1", credentials=creds)
 
             print("gmail_cred function executed")
+            
             return service, creds
 
-# Create
-    def gmail_contructor(auth: str):
-        service = auth.gmail_cred_auth()
-        return service
-        
-        

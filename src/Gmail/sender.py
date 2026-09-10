@@ -4,7 +4,7 @@ import sys
 import logging
 from googleapiclient.errors import HttpError
 from retrying import retry
-
+from Gmail.client import gmail
 
 # Main task: Give message back to user
 
@@ -12,18 +12,20 @@ logger = logging.getLogger(__name__)
     
 #Retry logic for function (max attempts = 3)
 @ retry( stop_max_attempt_number = 3)
-def send_gmail_msg(prompt: str, service: str ) -> None:
+def send_gmail_msg(output, user_subject, To, From ) -> None:
     
     
+    service, *_ = gmail.gmail_cred_auth()  
     #Assigns the message variables with prompt input
-    (subject, output, To, From, *_)  = len_check(prompt)
     #Forms the general message
     for _ in range(3):
         try:
+            
+            
             #Creates message object
             message = EmailMessage()        
             
-            message["Subject"] = subject
+            message["Subject"] = user_subject
             message["To"] = To
             message["From"] = From
             
