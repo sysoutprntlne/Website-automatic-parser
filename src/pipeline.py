@@ -5,14 +5,22 @@ from Gmail.reader import grab_messages_list
 from Gmail.sender import send_gmail_msg
 from prompt.prompting_model import get_prompt, get_personality
 from Model.Llama import Model
+from Model.memry import Vector_lib
+# where to turn on bigger parts
+import logging
 
+
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    filename='app.log')
 
 def __main__():
     
     
     #First authenicate 
-    Person_data = "src\Model\memry\pirate.json"
-    personality = get_personality(Person_data)
+    Person_data = Vector_lib.get_vector_library()
+    personality =" src\Model\memry\pirate.json"
 
     test_auth = gmail.gmail_cred_auth()
     print("auth passed---")
@@ -26,8 +34,6 @@ def __main__():
 
     for i in range(3):
     
-        
-        
         prompt = get_prompt(Message[i],personality, From[i], To[i], Subject[i] )
         (output, user_subject) = Model.Llama_model(prompt)
 

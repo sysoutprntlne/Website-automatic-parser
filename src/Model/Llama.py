@@ -1,7 +1,7 @@
 from ollama import chat
 from ollama import ChatResponse
 from pydantic import BaseModel
- 
+from prompt import prompting_model
 # Model -> Prompting, persistent memory, build
 
 # ===============
@@ -9,7 +9,8 @@ from pydantic import BaseModel
 
 class Model:
     
-    
+    #Specify size of the input
+    #It can accept basic input
 
     def Llama_model(input, BaseModel=BaseModel, chat=chat, ChatResponse = ChatResponse ):
 
@@ -41,11 +42,12 @@ class Model:
 
 
         print("Model has responded")
+        print(output, user_subject)
         return output, user_subject
 
     def message_format_model(contact_list: list, message_list: list) -> str:
 
-        input = f"Correctly sort messages, subject, to, and from. Raw message: {message_list} Raw Contact: {contact_list}" 
+        input = f"Correctly sort messages, subject, to, and from. create them in a ordered list format. Raw message: {message_list} Raw Contact: {contact_list}" 
 
         class format_model(BaseModel):
             From: str
@@ -58,14 +60,16 @@ class Model:
             messages=[
                 {
                     "role": "user",
-                    "content": "Correctly find and parse the correct pairing emails and conversations ( From, To, message)",
+                    "content": input,
                     
                 },
             ],
             format= format_model.model_json_schema(),
-            options={"temperature": 0}
-                    
+            options={"temperature": 0},
+            
+            
         )
+        
         format_model = format_model.model_validate_json(response.message.content)
         
         From = format_model.From
@@ -73,6 +77,9 @@ class Model:
         Message = format_model.Message
         Subject = format_model.Subject
         
+        
+        print(From, To, Message, Subject)
         print("message formatting complete")
 
         return (From, To, Message, Subject)
+    
