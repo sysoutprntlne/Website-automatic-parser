@@ -42,7 +42,7 @@ class Model:
 
 
         print("Model has responded")
-        print(output, user_subject)
+        print(f"output: {output}  subject: {user_subject}:")
         return output, user_subject
 
     def message_format_model(contact_list: list, message_list: list) -> str:
@@ -78,7 +78,6 @@ class Model:
         Subject = format_model.Subject
         
         
-        print(From, To, Message, Subject)
         print("message formatting complete")
 
         return (From, To, Message, Subject)

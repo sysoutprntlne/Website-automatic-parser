@@ -1,58 +1,48 @@
-
-
 from googleapiclient.errors import HttpError
 from Gmail.client import gmail
 
-# If modifying these scopes, delete the file token.json.
 
-
-def grab_messages_list() -> str:
-
+def grab_messages_list() -> tuple[list, list]:
     print("Grabbing message history")
-    
-    """Shows basic usage of the Gmail API.
-    Lists the user's Gmail messages.
-    """
+
     message_list = []
     contact_list = []
     service, *_ = gmail.gmail_cred_auth()
+
     try:
-        # Call the Gmail API
         results = (
-            service.users().messages().list(userId="me", labelIds=["INBOX"]).execute()
+            service.users()
+            .messages()
+            .list(userId="me", labelIds=["INBOX"])
+            .execute()
         )
         messages = results.get("messages", [])
         if not messages:
             print("No messages found.")
 
         for message in messages:
-            msg = (
-                service.users().messages().get(userId="me", id=message["id"]).execute()
-            )
-
-            message_list.append(msg["snippet"])
-        results = (
-                service.users().messages().list(userId="me", labelIds=["INBOX"]).execute()
-            )
-        messages = results.get("messages", [])
-
-        for message in messages:
-            msg = (
-                service.users().messages().get(userId="me", id=message["id"]).execute()
-                
-            )
-
-            contact_list.append(msg["payload"]["headers"])
             
+            msg = (
+                service.users()
+                .messages()
+                .get(
+                    userId="me",
+                    id=message["id"],
+                    format="metadata",
+                    metadataHeaders=["From", "To", "Subject"],
+                )
+                .execute()
+            )
+            
+            print("executed")
+            print(msg.get("snippet"))
+            print(msg["payload"]["headers"])
+
+            message_list.append(msg.get("snippet"))
+            contact_list.append(msg["payload"]["headers"])
+            break
 
     except HttpError as error:
-        # TODO(developer) - Handle errors from gmail API.
         print(f"An error occurred: {error}")
-
-    print(contact_list);print(message_list)
+    print("sucessful grab")
     return contact_list, message_list
-
-
-# Where main action code starts
-# =============================
-

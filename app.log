@@ -136,3 +136,5 @@ Traceback (most recent call last):
   File "C:\Users\user\Desktop\2026 Code\webML\.venv\Lib\site-packages\googleapiclient\http.py", line 938, in execute
     raise HttpError(resp, content, uri=self.uri)
 googleapiclient.errors.HttpError: <HttpError 400 when requesting https://gmail.googleapis.com/gmail/v1/users/me/messages/send?alt=json returned "Invalid To header". Details: "[{'message': 'Invalid To header', 'domain': 'global', 'reason': 'invalidArgument'}]">
+2026-09-13 17:54:42,964 - googleapiclient.discovery_cache - INFO - file_cache is only supported with oauth2client<4.0.0
+2026-09-13 17:54:42,972 - googleapiclient.discovery_cache - INFO - file_cache is only supported with oauth2client<4.0.0
