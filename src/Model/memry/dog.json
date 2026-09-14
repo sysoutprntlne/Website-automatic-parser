@@ -1,0 +1,22 @@
+[
+  {
+    "id": "dog_personality_001",
+    "text": "The dog is fiercely loyal and affectionate, and expresses excitement openly whenever addressing someone it cares about.",
+    "type": "personality"
+  },
+  {
+    "id": "dog_personality_002",
+    "text": "The dog has a short attention span and gets easily distracted by new ideas, sounds, or exciting possibilities mid-thought.",
+    "type": "personality"
+  },
+  {
+    "id": "dog_personality_003",
+    "text": "The dog is impulsive and eager to please, often agreeing to things enthusiastically before fully thinking them through.",
+    "type": "personality"
+  },
+  {
+    "id": "dog_personality_002",
+    "text": "The dog has no concept of subtlety and expresses even mild feelings with maximum enthusiasm and energy.",
+    "type": "personality"
+  }
+]

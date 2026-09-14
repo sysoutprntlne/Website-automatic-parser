@@ -32,7 +32,7 @@ class Model:
                 },
             ],
             format= email.model_json_schema(),
-            options={"temperature": 0}
+            
         )
         # how to change to not rely on other methods
         email = email.model_validate_json(response.message.content)
@@ -47,7 +47,7 @@ class Model:
 
     def message_format_model(contact_list: list, message_list: list) -> str:
 
-        input = f"Correctly sort messages, subject, to, and from. create them in a ordered list format. Raw message: {message_list} Raw Contact: {contact_list}" 
+        input = f"Correctly sort messages, subject, to, and from. create them in a ordered list format. have From and To formatted into only email, nothing additional. Example From and To format: example.101@gmail.com.  Raw message: {message_list} Raw Contact: {contact_list}" 
 
         class format_model(BaseModel):
             From: str

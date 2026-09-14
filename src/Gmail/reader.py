@@ -8,8 +8,7 @@ def grab_messages_list() -> tuple[list, list]:
     message_list = []
     contact_list = []
     service, *_ = gmail.gmail_cred_auth()
-
-    try:
+    try :
         results = (
             service.users()
             .messages()
@@ -19,8 +18,8 @@ def grab_messages_list() -> tuple[list, list]:
         messages = results.get("messages", [])
         if not messages:
             print("No messages found.")
+        for message in messages[:6]:
 
-        for message in messages:
             
             msg = (
                 service.users()
@@ -40,7 +39,7 @@ def grab_messages_list() -> tuple[list, list]:
 
             message_list.append(msg.get("snippet"))
             contact_list.append(msg["payload"]["headers"])
-            break
+
 
     except HttpError as error:
         print(f"An error occurred: {error}")

@@ -6,37 +6,33 @@ import json
 
 
 # Getting the prompt for model
-
-
 def get_prompt(context, personality, From, To, Subject):
-    prompt = f"""
-            
-        
-        Write this email with the goal to match their personality. Match the style in the provided context. Keep it natural, concise, and do not invent information.
 
 
-            These returned values must be filled with the information it is labeled as. do not include the labels with it.
-            
-            
-            Evaluate in the end that you correctly answered the prompt.
+    prompt = f"""You are drafting an email on behalf of a user, replying to the message in CONTEXT.
 
-        CONTEXT:
-        {context}
-        
-        from:
-        {From}
-        to:
-        {To}
-        
-        subject:
-        {Subject}
-        
-        personality:
-        {personality}
-        
-        
+CONTEXT is the incoming email you are responding to. Use it ONLY as a source of facts and content. Do NOT copy or imitate its tone, vocabulary, sentence structure, or energy level, even if it is casual or high-energy. Its writing style is irrelevant to your reply.
 
-        """
+PERSONALITY below describes character traits, not writing style directly. You must translate these traits into a distinctive voice yourself: invent vocabulary, phrasing, sentence rhythm, and tone that a person with these traits would plausibly use in a real email. Do not write a neutral or generic email that merely references these traits — the traits must be expressed through HOW you write, not just what you say. Commit fully and consistently to this voice in every sentence, regardless of how casual or energetic CONTEXT is.
+
+PERSONALITY TRAITS:
+{personality}
+
+FACTS
+Only use information explicitly given below. Do not invent names, dates, numbers, or commitments not present in the inputs. If a detail is missing, leave it out.
+
+From: {From}
+To: {To}
+Subject: {Subject}
+
+CONTEXT (incoming message to respond to — facts only, ignore its style):
+{context}
+
+OUTPUT FORMAT
+- Return only the email body text — nothing else.
+- No subject line, no labels, no headers.
+- No explanation, no commentary, no restating these instructions.
+"""
     print("prompt obtained")
     return prompt
 

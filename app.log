@@ -138,3 +138,11 @@ Traceback (most recent call last):
 googleapiclient.errors.HttpError: <HttpError 400 when requesting https://gmail.googleapis.com/gmail/v1/users/me/messages/send?alt=json returned "Invalid To header". Details: "[{'message': 'Invalid To header', 'domain': 'global', 'reason': 'invalidArgument'}]">
 2026-09-13 17:54:42,964 - googleapiclient.discovery_cache - INFO - file_cache is only supported with oauth2client<4.0.0
 2026-09-13 17:54:42,972 - googleapiclient.discovery_cache - INFO - file_cache is only supported with oauth2client<4.0.0
+2026-09-13 18:32:49,709 - googleapiclient.discovery_cache - INFO - file_cache is only supported with oauth2client<4.0.0
+2026-09-13 18:32:49,716 - googleapiclient.discovery_cache - INFO - file_cache is only supported with oauth2client<4.0.0
+2026-09-13 20:07:56,714 - googleapiclient.discovery_cache - INFO - file_cache is only supported with oauth2client<4.0.0
+2026-09-13 20:07:56,721 - googleapiclient.discovery_cache - INFO - file_cache is only supported with oauth2client<4.0.0
+2026-09-13 20:13:40,304 - googleapiclient.discovery_cache - INFO - file_cache is only supported with oauth2client<4.0.0
+2026-09-13 20:13:40,312 - googleapiclient.discovery_cache - INFO - file_cache is only supported with oauth2client<4.0.0
+2026-09-13 20:20:52,558 - googleapiclient.discovery_cache - INFO - file_cache is only supported with oauth2client<4.0.0
+2026-09-13 20:20:52,568 - googleapiclient.discovery_cache - INFO - file_cache is only supported with oauth2client<4.0.0

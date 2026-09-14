@@ -20,14 +20,13 @@ def __main__():
     
     #First authenicate 
     Person_data = Vector_lib.get_vector_library()
-    personality =" src\Model\memry\pirate.json"
 
     test_auth = gmail.gmail_cred_auth()
     print("auth passed---")
     
     
     
-    message_list, contact_list, *_ = grab_messages_list()
+    contact_list, message_list, *_ = grab_messages_list()
     (From,To,Message,Subject,*_) = Model.message_format_model(message_list,contact_list)
             
     #Build model, taking list as input, let be input, make it modeular
