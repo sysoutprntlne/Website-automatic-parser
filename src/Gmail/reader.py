@@ -33,9 +33,7 @@ def grab_messages_list() -> tuple[list, list]:
                 .execute()
             )
             
-            print("executed")
-            print(msg.get("snippet"))
-            print(msg["payload"]["headers"])
+            
 
             message_list.append(msg.get("snippet"))
             contact_list.append(msg["payload"]["headers"])
