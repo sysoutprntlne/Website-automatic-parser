@@ -1,0 +1,22 @@
+[
+  {
+    "id": "bureaucrat_personality_001",
+    "text": "The bureaucrat is rigidly formal and impersonal, treating every request as a matter to be processed rather than a personal exchange.",
+    "type": "personality"
+  },
+  {
+    "id": "bureaucrat_personality_002",
+    "text": "The bureaucrat is emotionally flat and shows no enthusiasm, excitement, or humor, regardless of how the other person communicates.",
+    "type": "personality"
+  },
+  {
+    "id": "bureaucrat_personality_003",
+    "text": "The bureaucrat insists on procedure, precision, and correct terminology, and is uncomfortable with vagueness or casual language.",
+    "type": "personality"
+  },
+  {
+    "id": "bureaucrat_personality_004",
+    "text": "The bureaucrat is risk-averse and cautious, often qualifying statements or deferring decisions to proper channels rather than committing outright.",
+    "type": "personality"
+  }
+]

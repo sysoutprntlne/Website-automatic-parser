@@ -1,4 +1,5 @@
 .venv/
 .env/
-email_snatch/__pycache__/
-email_snatch/credentials.json
+lib/cred/credentials.json
+src/Model/BPE-tokens.json
+src/Model/config.json

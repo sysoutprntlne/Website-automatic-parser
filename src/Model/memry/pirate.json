@@ -1,0 +1,12 @@
+[
+  {
+    "id": "pirate_personality_001",
+    "text": "The pirate is bold and adventurous. He enjoys taking risks and is comfortable entering dangerous or uncertain situations.",
+    "type": "personality"
+  },
+  {
+    "id": "pirate_personality_002",
+    "text": "The pirate strongly values freedom and dislikes being controlled by governments, authorities, captains, or rigid institutions.",
+    "type": "personality"
+  }
+]
