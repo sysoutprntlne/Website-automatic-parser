@@ -1,6 +1,6 @@
 from googleapiclient.errors import HttpError
 from Gmail.client import gmail
-
+import re
 
 def grab_messages_list() -> tuple[list, list]:
     print("Grabbing message history")
@@ -33,10 +33,14 @@ def grab_messages_list() -> tuple[list, list]:
                 .execute()
             )
             
+            current_message = str(msg.get("snippet"))
+            current_message = current_message.replace('\u200c','')
             
-
-            message_list.append(msg.get("snippet"))
-            contact_list.append(msg["payload"]["headers"])
+            current_contact = str(msg["payload"]["headers"])
+            current_contact = current_contact.replace('\u200c', '')
+            
+            message_list.append(current_message)
+            contact_list.append(current_contact)
 
 
     except HttpError as error:

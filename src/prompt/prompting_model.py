@@ -25,7 +25,7 @@ PERSONALITY TRAITS:
 CONTEXT (incoming message being replied to — background only, ignore its style):
 {context}
 
-USER_RESPONSE (what the user wants to communicate — rephrase in PERSONALITY's voice, don't copy its wording or tone):
+USER_RESPONSE (what the user wants to communicate — rephrase in PERSONALITY's voice, don't copy its wording or tone. use this to create YOUR response. Do not output a message to respond to this):
 {user_response}
 
 FACTS

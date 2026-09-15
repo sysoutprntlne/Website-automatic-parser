@@ -1,7 +1,6 @@
 from ollama import chat
 from ollama import ChatResponse
 from pydantic import BaseModel
-from prompt import prompting_model
 # Model -> Prompting, persistent memory, build
 
 # ===============
@@ -64,6 +63,7 @@ class Model:
                     
                 },
             ],
+            
             format= format_model.model_json_schema(),
             options={"temperature": 0},
             
