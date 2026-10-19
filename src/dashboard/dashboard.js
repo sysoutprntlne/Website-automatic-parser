@@ -38,30 +38,26 @@ function render() {
   const items = (queue?.items || []).filter(item => item.category === category &&
     (item.sender+' '+item.subject+' '+item.preview).toLowerCase().includes(search));
   $('list').replaceChildren();
-  $('queue-title').textContent = titles[category];
   for (const name of Object.keys(titles)) $('count-'+name).textContent = queue?.counts[name] || 0;
-  for (const [id,name] of [['reply','needs_reply'],['review','review'],['filtered','filtered']]) $('metric-'+id).textContent = queue?.counts[name] ?? '—';
   document.querySelectorAll('[data-category]').forEach(button => button.classList.toggle('active', button.dataset.category === category));
   for (const item of items) {
     const button = element('button','message'+(selected?.message_id === item.message_id ? ' selected' : ''));
     const content = element('div','message-content');
     const sender = element('div','sender-row');
     sender.append(element('span','',item.sender || 'Unknown sender'),element('span','',dateLabel(item.timestamp)));
-    content.append(sender,element('h3','',item.subject || '(No subject)'),element('p','',item.preview),
+    content.append(sender,element('strong','message-subject',item.subject || '(No subject)'),element('p','',item.preview),
       element('p','classification',item.reason));
-    button.append(element('span','avatar',(item.sender[0] || '?').toUpperCase()),content);
+    button.append(content);
     button.addEventListener('click',guard(() => selectMessage(item)));
     $('list').append(button);
   }
   if (!items.length) {
-    const empty = element('div','empty');
-    empty.append(element('span','','✓'),element('h3','',search ? 'No matches on this page.' : category === 'needs_reply' ? 'A little breathing room.' : 'Nothing here right now.'),
-      element('p','',search ? 'Try a different sender or subject.' : 'Check To review or browse older inbox pages for more conversations.'));
+    const empty = element('p','',search ? 'No matches on this page.' : 'No emails in this filter.');
     $('list').append(empty);
   }
   $('older').disabled = !queue?.next_page_token || fetching || detailBusy;
   $('newer').disabled = !history.length || fetching || detailBusy;
-  $('page-label').textContent = 'Inbox page '+(history.length+1);
+  $('page-label').textContent = 'Page '+(history.length+1);
 }
 async function refresh(force=false) {
   if (fetching || detailBusy || !token) return;
@@ -118,7 +114,7 @@ async function selectMessage(item) {
     const data = await api('/message',{message_id:item.message_id});
     $('overview').textContent = data.summary.overview;
     for (const request of data.summary.requests) $('requests').append(element('li','',request));
-    $('deadlines').textContent = data.summary.deadlines.length ? 'Deadlines: '+data.summary.deadlines.join('; ') : 'No explicit deadline identified.';
+    $('deadlines').textContent = data.summary.deadlines.length ? 'Deadlines: '+data.summary.deadlines.join('; ') : '';
     $('recipients').textContent = 'Reply to: '+data.to.join(', ')+' · '+data.subject;
     $('original').textContent = data.body;
     $('generate').disabled = false;

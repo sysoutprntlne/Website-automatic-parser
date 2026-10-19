@@ -1,40 +1,25 @@
 <!doctype html>
 <html lang="en">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Reply desk</title><link rel="stylesheet" href="/dashboard.css"></head>
-<body>
-<aside class="sidebar">
-<a class="brand" href="/">r<span>reply desk</span></a>
-<p class="eyebrow">YOUR MAIL, IN FOCUS</p>
-<nav aria-label="Mail queues">
-<button class="nav active" data-category="needs_reply">Needs reply <span id="count-needs_reply">0</span></button>
-<button class="nav" data-category="review">To review <span id="count-review">0</span></button>
-<button class="nav" data-category="filtered">Filtered <span id="count-filtered">0</span></button>
-</nav>
-<div class="sidebar-note"><span class="dot"></span> Runs on your computer<p>Spam stays out of your reply queue. You decide what gets sent.</p></div>
-</aside>
-<main>
-<header><div><p class="eyebrow">PERSONAL EMAIL ASSISTANT</p><h1>Your reply desk.</h1><p class="subheading">A little less inbox. A little more focus.</p></div><button id="refresh" class="secondary">↻ Refresh inbox</button></header>
-<p id="demo-mode" class="demo-banner" hidden>SYNTHETIC DEMO · Mail and model outputs are simulated. Nothing can be sent or stored.</p>
-<section id="pairing" class="pairing"><div><h2>Connect your local backend</h2><p>Use the pairing token from <code>private/backend-token</code>. Gmail credentials stay in Python.</p></div><form id="connect"><label for="token">Pairing token</label><div class="input-row"><input type="password" id="token" autocomplete="off" required placeholder="Paste your local pairing token"><button type="submit">Connect</button></div></form></section>
-<section class="overview" aria-label="Inbox overview">
-<div><span class="metric-label">READY FOR A REPLY</span><strong id="metric-reply">—</strong><span>Questions &amp; requests</span></div>
-<div><span class="metric-label">WORTH A LOOK</span><strong id="metric-review">—</strong><span>You make the call</span></div>
-<div><span class="metric-label">QUIETLY FILTERED</span><strong id="metric-filtered">—</strong><span>Automated &amp; already replied</span></div>
-</section>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Email</title><link rel="stylesheet" href="/dashboard.css"></head>
+<body><main>
+<form id="connect"><div id="pairing"><label for="token">Token from <code>private/backend-token</code></label><div class="controls"><input type="password" id="token" autocomplete="off" required><button type="submit">Connect</button></div></div></form>
+<p id="demo-mode" hidden>Demo: simulated emails and replies.</p>
+<div class="toolbar"><nav aria-label="Email filters">
+<button class="active" data-category="needs_reply">Needs reply (<span id="count-needs_reply">0</span>)</button>
+<button data-category="review">Review (<span id="count-review">0</span>)</button>
+<button data-category="filtered">Filtered (<span id="count-filtered">0</span>)</button>
+</nav><div class="controls"><button id="refresh">Refresh</button><button id="disconnect">Disconnect</button></div></div>
 <div class="workspace">
-<section class="inbox-panel" aria-labelledby="queue-title"><div class="panel-header"><div><h2 id="queue-title">Needs reply</h2><p id="sync">Connect to load your inbox.</p></div><span class="badge" id="live">Paused</span></div>
-<label class="search"><span class="sr-only">Search this inbox page</span><input id="search" type="search" placeholder="Search sender or subject…"></label>
-<div id="list" class="message-list"><div class="empty"><span>↗</span><h3>A clearer inbox starts here.</h3><p>Connect your backend to find the conversations that need you.</p></div></div>
-<div class="pagination"><button id="newer" class="secondary" disabled>← Newer</button><span id="page-label">Inbox page 1</span><button id="older" class="secondary" disabled>Older →</button></div></section>
-<section class="detail-panel" aria-label="Reply workspace"><div id="placeholder" class="empty detail-empty"><span>✎</span><h2>One thoughtful reply at a time.</h2><p>Choose a conversation to see its request and draft a reply in your own voice.</p></div>
-<div id="detail" hidden><div class="detail-top"><span class="eyebrow">YOUR NEXT CONVERSATION</span><a id="gmail" class="text-link" target="_blank" rel="noopener noreferrer">Open in Gmail ↗</a></div><h2 id="subject"></h2><p id="recipients"></p><p id="filter-reason" class="reason"></p>
-<section class="summary-block"><h3>What they’re asking</h3><p id="overview"></p><ul id="requests"></ul><p id="deadlines"></p></section>
-<details class="original"><summary>Read original email</summary><pre id="original"></pre></details>
-<label for="intent">What would you like to say?</label><textarea id="intent" rows="2" placeholder="e.g. Yeah sure, Tuesday works for me."></textarea>
-<button id="generate">Draft my reply <span>↗</span></button><p class="hint">Your intent supplies the decision. Memory helps with your voice.</p>
-<div id="draft-section" hidden><div class="draft-heading"><h3>Your draft</h3><span id="evaluation" class="badge"></span></div><p id="issues"></p><label class="sr-only" for="draft">Edit your reply</label><textarea id="draft" rows="8"></textarea><div class="draft-actions"><button id="copy">Copy reply</button><button id="reject" class="secondary">Discard draft</button></div><p class="hint">Review the final text and recipients in Gmail, then use Gmail’s Send button.</p></div>
-<details class="remember"><summary>Remember a reply after sending</summary><p>Use <code>python -m src.main sent</code> to find its sent API ID. The backend verifies delivery before saving your final wording.</p><label for="sent-id">Sent message ID</label><div class="input-row"><input id="sent-id"><button id="remember">Verify &amp; remember</button></div></details>
+<section class="inbox-panel" aria-label="Emails"><input id="search" type="search" aria-label="Search this page" placeholder="Search emails"><p class="sync"><span id="live">Paused</span> · <span id="sync">Connect to load emails.</span></p>
+<div id="list" class="message-list"><p>Connect to load emails.</p></div>
+<div class="pagination"><button id="newer" disabled>Newer</button><span id="page-label">Page 1</span><button id="older" disabled>Older</button></div></section>
+<section class="detail-panel" aria-label="Reply"><p id="placeholder">Select an email.</p>
+<div id="detail" hidden><a id="gmail" target="_blank" rel="noopener noreferrer">Open in Gmail</a><p id="subject"></p><p id="recipients"></p><p id="filter-reason"></p>
+<div class="summary-block"><p id="overview"></p><ul id="requests"></ul><p id="deadlines"></p></div>
+<details><summary>Original email</summary><pre id="original"></pre></details>
+<label for="intent">Reply intent</label><textarea id="intent" rows="2"></textarea><button id="generate">Generate reply</button>
+<div id="draft-section" hidden><p id="evaluation"></p><p id="issues"></p><label for="draft">Edit reply</label><textarea id="draft" rows="8"></textarea><div class="controls"><button id="copy">Copy reply</button><button id="reject">Discard</button></div></div>
+<details><summary>Save sent reply to memory</summary><label for="sent-id">Sent message ID (<code>python -m src.main sent</code>)</label><div class="controls"><input id="sent-id"><button id="remember">Verify and save</button></div></details>
 </div></section></div>
-<footer><p id="status" role="status" aria-live="polite">Your messages stay between Gmail, this local backend, and your local model.</p><button id="disconnect" class="text-link">Disconnect</button></footer>
-</main><script src="/dashboard.js"></script>
-</body></html>
+<p id="status" role="status" aria-live="polite"></p>
+</main><script src="/dashboard.js"></script></body></html>

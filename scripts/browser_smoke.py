@@ -115,9 +115,9 @@ def smoke():
                         break
                     time.sleep(.1)
                 assert evaluate("document.querySelectorAll('#list .message').length") == 1
-                assert evaluate("document.getElementById('metric-filtered').textContent") == '3'
+                assert evaluate("document.getElementById('count-filtered').textContent") == '3'
                 evaluate("document.querySelector('[data-category=review]').click()")
-                assert evaluate("document.querySelector('#list h3').textContent") == '<img src=x onerror=alert(1)>'
+                assert evaluate("document.querySelector('#list .message-subject').textContent") == '<img src=x onerror=alert(1)>'
                 assert evaluate("document.querySelectorAll('#list img').length") == 0
                 evaluate("document.querySelector('[data-category=filtered]').click()")
                 assert evaluate("document.querySelectorAll('#list .message').length") == 3

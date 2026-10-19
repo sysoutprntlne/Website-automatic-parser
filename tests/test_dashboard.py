@@ -42,7 +42,7 @@ class DashboardTests(unittest.TestCase):
                 return result
             code,body,headers = request('GET','/')
             self.assertEqual(code,200)
-            self.assertIn(b'Your reply desk.',body)
+            self.assertIn(b'id="list"',body)
             self.assertNotIn(b'organizer@example.test',body)
             self.assertNotIn(app.token.encode(),body)
             self.assertIn("frame-ancestors 'none'",dict(headers)['Content-Security-Policy'])
