@@ -1,84 +1,43 @@
-from ollama import chat
-from ollama import ChatResponse
-from pydantic import BaseModel
-# Model -> Prompting, persistent memory, build
+"""Local Ollama structured chat adapter. Construction/imports have no IO."""
+from src.config import Config
 
-# ===============
-# Getting response output of model
+
+class ModelOutputError(RuntimeError):
+    pass
+
 
 class Model:
-    
-    #Specify size of the input
-    #It can accept basic input
+    def __init__(self, config=None):
+        self.config = config or Config()
+        self.calls = 0
+        self.prompt_tokens = 0
+        self.output_tokens = 0
+        self.usage_available = False
+        self._client = None
 
-    def Llama_model(input, BaseModel=BaseModel, chat=chat, ChatResponse = ChatResponse ):
+    def structured(self, task, instructions, data, schema, evaluator=False):
+        import json
+        from ollama import Client
+        if self._client is None:
+            self._client = Client(host=self.config.ollama_host, timeout=120)
+        self.calls += 1
+        response = self._client.chat(
+            model=self.config.evaluator_model if evaluator else self.config.model,
+            messages=[{'role': 'system', 'content': instructions},
+                      {'role': 'user', 'content': json.dumps({'task': task, 'data': data})}],
+            format=schema.model_json_schema(),
+            options={'temperature': self.config.temperature, 'seed': self.config.seed,
+                     'num_ctx': 16384, 'num_predict': 2048})
+        if response.prompt_eval_count is not None and response.eval_count is not None:
+            self.usage_available = True
+            self.prompt_tokens += response.prompt_eval_count
+            self.output_tokens += response.eval_count
+        try:
+            return schema.model_validate_json(response.message.content)
+        except (ValueError, TypeError):
+            raise ModelOutputError('Model returned invalid structured output') from None
 
-        class email(BaseModel):
-            
-            subject: str
-            output: str 
-
-        print("Model start")
-
-
-        response: ChatResponse = chat(
-            model="llama3.2",
-            messages=[
-                {
-                    "role": "user",
-                    "content": input,
-                    
-                },
-            ],
-            format= email.model_json_schema(),
-            
-        )
-        # how to change to not rely on other methods
-        email = email.model_validate_json(response.message.content)
-        
-        output = email.output
-        user_subject = email.subject
-
-
-        print("Model has responded")
-        print(f"output: {output}  subject: {user_subject}:")
-        return output, user_subject
-
-    def message_format_model(contact_list: list, message_list: list) -> str:
-
-        input = f"Correctly sort messages, subject, to, and from. create them in a ordered list format. have From and To formatted into only email, nothing additional. Example From and To format: example.101@gmail.com.  Raw message: {message_list} Raw Contact: {contact_list}" 
-
-        class format_model(BaseModel):
-            From: str
-            To: str
-            Message: str
-            Subject: str
-            
-        response: ChatResponse = chat(
-            model="llama3.2",
-            messages=[
-                {
-                    "role": "user",
-                    "content": input,
-                    
-                },
-            ],
-            
-            format= format_model.model_json_schema(),
-            options={"temperature": 0},
-            
-            
-        )
-        
-        format_model = format_model.model_validate_json(response.message.content)
-        
-        From = format_model.From
-        To = format_model.To
-        Message = format_model.Message
-        Subject = format_model.Subject
-        
-        
-        print("message formatting complete")
-
-        return (From, To, Message, Subject)
-    
+    def metrics(self):
+        return {'model_calls': self.calls,
+                'prompt_tokens': self.prompt_tokens if self.usage_available else None,
+                'output_tokens': self.output_tokens if self.usage_available else None}
