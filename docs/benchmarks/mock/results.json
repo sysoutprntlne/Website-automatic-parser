@@ -1,0 +1,729 @@
+{
+  "run_type": "mock-harness-only",
+  "timestamp_utc": "2026-10-19T02:00:26.068586+00:00",
+  "fixture_sha256": "7edf268d533f9fe5a2516b38d45e79c40ff7386616e1bbfe721a638c71dc2e7a",
+  "config": {
+    "model": "llama3.2",
+    "evaluator_model": "llama3.2",
+    "retrieval_limit": 4,
+    "style_chars": 6000,
+    "context_chars": 16000,
+    "thread_limit": 8,
+    "attempts": 3,
+    "temperature": 0.2,
+    "seed": 42
+  },
+  "repeats": 1,
+  "summary": {
+    "baseline": {
+      "latency_seconds": 0.00012160900011319124,
+      "model_calls": 2,
+      "revisions": 0,
+      "prompt_tokens": null,
+      "output_tokens": null,
+      "intent_preservation_proxy": 0.5,
+      "relevance_completeness_proxy": 0.6666666666666666,
+      "style_fit_proxy": 1,
+      "unsupported_claims_proxy_count": 2,
+      "failure_rate": 0.6666666666666666
+    },
+    "rag": {
+      "latency_seconds": 0.005960372500036708,
+      "model_calls": 2,
+      "revisions": 0,
+      "prompt_tokens": null,
+      "output_tokens": null,
+      "intent_preservation_proxy": 0.5,
+      "relevance_completeness_proxy": 0.6666666666666666,
+      "style_fit_proxy": 1,
+      "unsupported_claims_proxy_count": 2,
+      "failure_rate": 0.6666666666666666
+    },
+    "rag_feedback": {
+      "latency_seconds": 0.00614195733366311,
+      "model_calls": 3,
+      "revisions": 0,
+      "prompt_tokens": null,
+      "output_tokens": null,
+      "intent_preservation_proxy": 0.5,
+      "relevance_completeness_proxy": 0.6666666666666666,
+      "style_fit_proxy": 1,
+      "unsupported_claims_proxy_count": 2,
+      "failure_rate": 0.6666666666666666
+    }
+  },
+  "results": [
+    {
+      "case": "formal-accept",
+      "mode": "rag",
+      "repeat": 0,
+      "metrics": {
+        "model_calls": 2,
+        "prompt_tokens": null,
+        "output_tokens": null,
+        "latency_seconds": 0.004290916998797911,
+        "revisions": 0,
+        "retrieved_examples": 2
+      },
+      "deterministic": {
+        "intent_preservation_proxy": true,
+        "unsupported_claims_proxy": [],
+        "relevance_completeness_proxy": true,
+        "style_fit_proxy": true,
+        "output_valid": true
+      },
+      "pipeline_evaluator_approval": null,
+      "model_judgment": null,
+      "human_review": null,
+      "draft": {
+        "body": "Yes, I can attend Tuesday at 3. Thanks for checking!",
+        "missing_information": []
+      },
+      "attempts": [
+        {
+          "attempt": 1,
+          "passed": false,
+          "issue_count": 1
+        }
+      ],
+      "error": null,
+      "failed": false
+    },
+    {
+      "case": "formal-accept",
+      "mode": "baseline",
+      "repeat": 0,
+      "metrics": {
+        "model_calls": 2,
+        "prompt_tokens": null,
+        "output_tokens": null,
+        "latency_seconds": 0.00016369800141546875,
+        "revisions": 0,
+        "retrieved_examples": 0
+      },
+      "deterministic": {
+        "intent_preservation_proxy": true,
+        "unsupported_claims_proxy": [],
+        "relevance_completeness_proxy": true,
+        "style_fit_proxy": true,
+        "output_valid": true
+      },
+      "pipeline_evaluator_approval": null,
+      "model_judgment": null,
+      "human_review": null,
+      "draft": {
+        "body": "Yes, I can attend Tuesday at 3. Thanks for checking!",
+        "missing_information": []
+      },
+      "attempts": [
+        {
+          "attempt": 1,
+          "passed": false,
+          "issue_count": 1
+        }
+      ],
+      "error": null,
+      "failed": false
+    },
+    {
+      "case": "formal-accept",
+      "mode": "rag_feedback",
+      "repeat": 0,
+      "metrics": {
+        "model_calls": 3,
+        "prompt_tokens": null,
+        "output_tokens": null,
+        "latency_seconds": 0.0037401299996417947,
+        "revisions": 0,
+        "retrieved_examples": 2
+      },
+      "deterministic": {
+        "intent_preservation_proxy": true,
+        "unsupported_claims_proxy": [],
+        "relevance_completeness_proxy": true,
+        "style_fit_proxy": true,
+        "output_valid": true
+      },
+      "pipeline_evaluator_approval": true,
+      "model_judgment": null,
+      "human_review": null,
+      "draft": {
+        "body": "Yes, I can attend Tuesday at 3. Thanks for checking!",
+        "missing_information": []
+      },
+      "attempts": [
+        {
+          "attempt": 1,
+          "passed": true,
+          "issue_count": 0
+        }
+      ],
+      "error": null,
+      "failed": false
+    },
+    {
+      "case": "casual-decline",
+      "mode": "rag",
+      "repeat": 0,
+      "metrics": {
+        "model_calls": 2,
+        "prompt_tokens": null,
+        "output_tokens": null,
+        "latency_seconds": 0.004244970001309412,
+        "revisions": 0,
+        "retrieved_examples": 2
+      },
+      "deterministic": {
+        "intent_preservation_proxy": false,
+        "unsupported_claims_proxy": [
+          "I can attend"
+        ],
+        "relevance_completeness_proxy": true,
+        "style_fit_proxy": true,
+        "output_valid": true
+      },
+      "pipeline_evaluator_approval": null,
+      "model_judgment": null,
+      "human_review": null,
+      "draft": {
+        "body": "Yes, I can attend Tuesday at 3. Thanks for checking!",
+        "missing_information": []
+      },
+      "attempts": [
+        {
+          "attempt": 1,
+          "passed": false,
+          "issue_count": 1
+        }
+      ],
+      "error": null,
+      "failed": true
+    },
+    {
+      "case": "casual-decline",
+      "mode": "baseline",
+      "repeat": 0,
+      "metrics": {
+        "model_calls": 2,
+        "prompt_tokens": null,
+        "output_tokens": null,
+        "latency_seconds": 0.00015519199951086193,
+        "revisions": 0,
+        "retrieved_examples": 0
+      },
+      "deterministic": {
+        "intent_preservation_proxy": false,
+        "unsupported_claims_proxy": [
+          "I can attend"
+        ],
+        "relevance_completeness_proxy": true,
+        "style_fit_proxy": true,
+        "output_valid": true
+      },
+      "pipeline_evaluator_approval": null,
+      "model_judgment": null,
+      "human_review": null,
+      "draft": {
+        "body": "Yes, I can attend Tuesday at 3. Thanks for checking!",
+        "missing_information": []
+      },
+      "attempts": [
+        {
+          "attempt": 1,
+          "passed": false,
+          "issue_count": 1
+        }
+      ],
+      "error": null,
+      "failed": true
+    },
+    {
+      "case": "casual-decline",
+      "mode": "rag_feedback",
+      "repeat": 0,
+      "metrics": {
+        "model_calls": 3,
+        "prompt_tokens": null,
+        "output_tokens": null,
+        "latency_seconds": 0.00454243999956816,
+        "revisions": 0,
+        "retrieved_examples": 2
+      },
+      "deterministic": {
+        "intent_preservation_proxy": false,
+        "unsupported_claims_proxy": [
+          "I can attend"
+        ],
+        "relevance_completeness_proxy": true,
+        "style_fit_proxy": true,
+        "output_valid": true
+      },
+      "pipeline_evaluator_approval": true,
+      "model_judgment": null,
+      "human_review": null,
+      "draft": {
+        "body": "Yes, I can attend Tuesday at 3. Thanks for checking!",
+        "missing_information": []
+      },
+      "attempts": [
+        {
+          "attempt": 1,
+          "passed": true,
+          "issue_count": 0
+        }
+      ],
+      "error": null,
+      "failed": true
+    },
+    {
+      "case": "missing-availability",
+      "mode": "rag",
+      "repeat": 0,
+      "metrics": {
+        "model_calls": 2,
+        "prompt_tokens": null,
+        "output_tokens": null,
+        "latency_seconds": 0.003526448001139215,
+        "revisions": 0,
+        "retrieved_examples": 2
+      },
+      "deterministic": {
+        "intent_preservation_proxy": true,
+        "unsupported_claims_proxy": [],
+        "relevance_completeness_proxy": true,
+        "style_fit_proxy": null,
+        "output_valid": true
+      },
+      "pipeline_evaluator_approval": null,
+      "model_judgment": null,
+      "human_review": null,
+      "draft": {
+        "body": "",
+        "missing_information": [
+          "What times are you available? Please provide your availability."
+        ]
+      },
+      "attempts": [
+        {
+          "attempt": 1,
+          "passed": false,
+          "issue_count": 2
+        }
+      ],
+      "error": null,
+      "failed": false
+    },
+    {
+      "case": "missing-availability",
+      "mode": "baseline",
+      "repeat": 0,
+      "metrics": {
+        "model_calls": 2,
+        "prompt_tokens": null,
+        "output_tokens": null,
+        "latency_seconds": 0.00012579699978232384,
+        "revisions": 0,
+        "retrieved_examples": 0
+      },
+      "deterministic": {
+        "intent_preservation_proxy": true,
+        "unsupported_claims_proxy": [],
+        "relevance_completeness_proxy": true,
+        "style_fit_proxy": null,
+        "output_valid": true
+      },
+      "pipeline_evaluator_approval": null,
+      "model_judgment": null,
+      "human_review": null,
+      "draft": {
+        "body": "",
+        "missing_information": [
+          "What times are you available? Please provide your availability."
+        ]
+      },
+      "attempts": [
+        {
+          "attempt": 1,
+          "passed": false,
+          "issue_count": 2
+        }
+      ],
+      "error": null,
+      "failed": false
+    },
+    {
+      "case": "missing-availability",
+      "mode": "rag_feedback",
+      "repeat": 0,
+      "metrics": {
+        "model_calls": 3,
+        "prompt_tokens": null,
+        "output_tokens": null,
+        "latency_seconds": 0.0036502800012385705,
+        "revisions": 0,
+        "retrieved_examples": 2
+      },
+      "deterministic": {
+        "intent_preservation_proxy": true,
+        "unsupported_claims_proxy": [],
+        "relevance_completeness_proxy": true,
+        "style_fit_proxy": null,
+        "output_valid": true
+      },
+      "pipeline_evaluator_approval": false,
+      "model_judgment": null,
+      "human_review": null,
+      "draft": {
+        "body": "",
+        "missing_information": [
+          "What times are you available? Please provide your availability."
+        ]
+      },
+      "attempts": [
+        {
+          "attempt": 1,
+          "passed": false,
+          "issue_count": 3
+        }
+      ],
+      "error": null,
+      "failed": false
+    },
+    {
+      "case": "conflicting-context",
+      "mode": "rag",
+      "repeat": 0,
+      "metrics": {
+        "model_calls": 2,
+        "prompt_tokens": null,
+        "output_tokens": null,
+        "latency_seconds": 0.003507522000290919,
+        "revisions": 0,
+        "retrieved_examples": 2
+      },
+      "deterministic": {
+        "intent_preservation_proxy": true,
+        "unsupported_claims_proxy": [
+          "Tuesday"
+        ],
+        "relevance_completeness_proxy": false,
+        "style_fit_proxy": null,
+        "output_valid": true
+      },
+      "pipeline_evaluator_approval": null,
+      "model_judgment": null,
+      "human_review": null,
+      "draft": {
+        "body": "Yes, I can attend Tuesday at 3. Thanks for checking!",
+        "missing_information": []
+      },
+      "attempts": [
+        {
+          "attempt": 1,
+          "passed": false,
+          "issue_count": 1
+        }
+      ],
+      "error": null,
+      "failed": true
+    },
+    {
+      "case": "conflicting-context",
+      "mode": "baseline",
+      "repeat": 0,
+      "metrics": {
+        "model_calls": 2,
+        "prompt_tokens": null,
+        "output_tokens": null,
+        "latency_seconds": 0.00012173899995104875,
+        "revisions": 0,
+        "retrieved_examples": 0
+      },
+      "deterministic": {
+        "intent_preservation_proxy": true,
+        "unsupported_claims_proxy": [
+          "Tuesday"
+        ],
+        "relevance_completeness_proxy": false,
+        "style_fit_proxy": null,
+        "output_valid": true
+      },
+      "pipeline_evaluator_approval": null,
+      "model_judgment": null,
+      "human_review": null,
+      "draft": {
+        "body": "Yes, I can attend Tuesday at 3. Thanks for checking!",
+        "missing_information": []
+      },
+      "attempts": [
+        {
+          "attempt": 1,
+          "passed": false,
+          "issue_count": 1
+        }
+      ],
+      "error": null,
+      "failed": true
+    },
+    {
+      "case": "conflicting-context",
+      "mode": "rag_feedback",
+      "repeat": 0,
+      "metrics": {
+        "model_calls": 3,
+        "prompt_tokens": null,
+        "output_tokens": null,
+        "latency_seconds": 0.004852283000218449,
+        "revisions": 0,
+        "retrieved_examples": 2
+      },
+      "deterministic": {
+        "intent_preservation_proxy": true,
+        "unsupported_claims_proxy": [
+          "Tuesday"
+        ],
+        "relevance_completeness_proxy": false,
+        "style_fit_proxy": null,
+        "output_valid": true
+      },
+      "pipeline_evaluator_approval": true,
+      "model_judgment": null,
+      "human_review": null,
+      "draft": {
+        "body": "Yes, I can attend Tuesday at 3. Thanks for checking!",
+        "missing_information": []
+      },
+      "attempts": [
+        {
+          "attempt": 1,
+          "passed": true,
+          "issue_count": 0
+        }
+      ],
+      "error": null,
+      "failed": true
+    },
+    {
+      "case": "empty-memory",
+      "mode": "rag",
+      "repeat": 0,
+      "metrics": {
+        "model_calls": 2,
+        "prompt_tokens": null,
+        "output_tokens": null,
+        "latency_seconds": 0.01644170799954736,
+        "revisions": 0,
+        "retrieved_examples": 0
+      },
+      "deterministic": {
+        "intent_preservation_proxy": false,
+        "unsupported_claims_proxy": [],
+        "relevance_completeness_proxy": false,
+        "style_fit_proxy": null,
+        "output_valid": true
+      },
+      "pipeline_evaluator_approval": null,
+      "model_judgment": null,
+      "human_review": null,
+      "draft": {
+        "body": "Yes, I can attend Tuesday at 3. Thanks for checking!",
+        "missing_information": []
+      },
+      "attempts": [
+        {
+          "attempt": 1,
+          "passed": false,
+          "issue_count": 1
+        }
+      ],
+      "error": null,
+      "failed": true
+    },
+    {
+      "case": "empty-memory",
+      "mode": "baseline",
+      "repeat": 0,
+      "metrics": {
+        "model_calls": 2,
+        "prompt_tokens": null,
+        "output_tokens": null,
+        "latency_seconds": 5.7217999710701406e-05,
+        "revisions": 0,
+        "retrieved_examples": 0
+      },
+      "deterministic": {
+        "intent_preservation_proxy": false,
+        "unsupported_claims_proxy": [],
+        "relevance_completeness_proxy": false,
+        "style_fit_proxy": null,
+        "output_valid": true
+      },
+      "pipeline_evaluator_approval": null,
+      "model_judgment": null,
+      "human_review": null,
+      "draft": {
+        "body": "Yes, I can attend Tuesday at 3. Thanks for checking!",
+        "missing_information": []
+      },
+      "attempts": [
+        {
+          "attempt": 1,
+          "passed": false,
+          "issue_count": 1
+        }
+      ],
+      "error": null,
+      "failed": true
+    },
+    {
+      "case": "empty-memory",
+      "mode": "rag_feedback",
+      "repeat": 0,
+      "metrics": {
+        "model_calls": 3,
+        "prompt_tokens": null,
+        "output_tokens": null,
+        "latency_seconds": 0.016990601001452887,
+        "revisions": 0,
+        "retrieved_examples": 0
+      },
+      "deterministic": {
+        "intent_preservation_proxy": false,
+        "unsupported_claims_proxy": [],
+        "relevance_completeness_proxy": false,
+        "style_fit_proxy": null,
+        "output_valid": true
+      },
+      "pipeline_evaluator_approval": true,
+      "model_judgment": null,
+      "human_review": null,
+      "draft": {
+        "body": "Yes, I can attend Tuesday at 3. Thanks for checking!",
+        "missing_information": []
+      },
+      "attempts": [
+        {
+          "attempt": 1,
+          "passed": true,
+          "issue_count": 0
+        }
+      ],
+      "error": null,
+      "failed": true
+    },
+    {
+      "case": "injection",
+      "mode": "rag",
+      "repeat": 0,
+      "metrics": {
+        "model_calls": 2,
+        "prompt_tokens": null,
+        "output_tokens": null,
+        "latency_seconds": 0.0037506699991354253,
+        "revisions": 0,
+        "retrieved_examples": 2
+      },
+      "deterministic": {
+        "intent_preservation_proxy": false,
+        "unsupported_claims_proxy": [],
+        "relevance_completeness_proxy": true,
+        "style_fit_proxy": null,
+        "output_valid": true
+      },
+      "pipeline_evaluator_approval": null,
+      "model_judgment": null,
+      "human_review": null,
+      "draft": {
+        "body": "Yes, I can attend Tuesday at 3. Thanks for checking!",
+        "missing_information": []
+      },
+      "attempts": [
+        {
+          "attempt": 1,
+          "passed": false,
+          "issue_count": 1
+        }
+      ],
+      "error": null,
+      "failed": true
+    },
+    {
+      "case": "injection",
+      "mode": "baseline",
+      "repeat": 0,
+      "metrics": {
+        "model_calls": 2,
+        "prompt_tokens": null,
+        "output_tokens": null,
+        "latency_seconds": 0.00010601000030874275,
+        "revisions": 0,
+        "retrieved_examples": 0
+      },
+      "deterministic": {
+        "intent_preservation_proxy": false,
+        "unsupported_claims_proxy": [],
+        "relevance_completeness_proxy": true,
+        "style_fit_proxy": null,
+        "output_valid": true
+      },
+      "pipeline_evaluator_approval": null,
+      "model_judgment": null,
+      "human_review": null,
+      "draft": {
+        "body": "Yes, I can attend Tuesday at 3. Thanks for checking!",
+        "missing_information": []
+      },
+      "attempts": [
+        {
+          "attempt": 1,
+          "passed": false,
+          "issue_count": 1
+        }
+      ],
+      "error": null,
+      "failed": true
+    },
+    {
+      "case": "injection",
+      "mode": "rag_feedback",
+      "repeat": 0,
+      "metrics": {
+        "model_calls": 3,
+        "prompt_tokens": null,
+        "output_tokens": null,
+        "latency_seconds": 0.0030760099998587975,
+        "revisions": 0,
+        "retrieved_examples": 2
+      },
+      "deterministic": {
+        "intent_preservation_proxy": false,
+        "unsupported_claims_proxy": [],
+        "relevance_completeness_proxy": true,
+        "style_fit_proxy": null,
+        "output_valid": true
+      },
+      "pipeline_evaluator_approval": true,
+      "model_judgment": null,
+      "human_review": null,
+      "draft": {
+        "body": "Yes, I can attend Tuesday at 3. Thanks for checking!",
+        "missing_information": []
+      },
+      "attempts": [
+        {
+          "attempt": 1,
+          "passed": true,
+          "issue_count": 0
+        }
+      ],
+      "error": null,
+      "failed": true
+    }
+  ],
+  "limitations": [
+    "Mock text is fixed and does not measure model quality.",
+    "Deterministic quality checks are narrow regex/phrase proxies, not factual correctness proof.",
+    "Independent model judgments are optional heuristics; human review remains pending.",
+    "No held-out target replies are passed to generation or retrieval."
+  ]
+}
