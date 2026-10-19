@@ -1,4 +1,4 @@
-from Pipeline import start
+from pipeline import start
 
 if __name__ == "__main__":
     start()

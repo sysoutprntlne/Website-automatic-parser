@@ -6,6 +6,8 @@ from prompt.prompting_model import get_prompt, user_response
 from Gmail.reader import grab_messages_list
 from Gmail.sender import send_gmail_msg
 from Model.memry.Vector_lib import update_memory_persistent,load_memory_persistent
+
+
 def start():
     
     contact_list, message_list, *_ = grab_messages_list()
