@@ -8,8 +8,12 @@ def main(argv=None):
     parser = argparse.ArgumentParser(description='Local personalized Gmail reply assistant')
     commands = parser.add_subparsers(dest='command', required=True)
     commands.add_parser('demo', help='Synthetic demo; no Gmail, model server or memory required')
-    commands.add_parser('auth', help='Explicitly authorize backend Gmail access')
+    auth = commands.add_parser('auth', help='Explicitly authorize backend Gmail access')
+    auth.add_argument('--allow-send', action='store_true', help='Optional CLI send permission; extension needs read-only access')
     commands.add_parser('inbox', help='List a small inbox selection')
+    commands.add_parser('sent', help='List recent sent API message IDs for confirmation')
+    confirm = commands.add_parser('confirm-sent', help='Verify Gmail SENT and store actual sent text')
+    confirm.add_argument('message_id')
     imp = commands.add_parser('import-sent', help='Explicit writing-example import')
     imp.add_argument('--limit', type=int, default=100)
     imp.add_argument('--query', default='')
@@ -47,11 +51,15 @@ def main(argv=None):
             mem.reset(confirmed=args.confirm_reset)
         return
     from src.Gmail.client import GmailClient, authenticate
-    gmail = GmailClient(authenticate(config, interactive=args.command == 'auth'), config)
+    gmail = GmailClient(authenticate(config, interactive=args.command == 'auth',
+        allow_send=args.command == 'reply' or getattr(args, 'allow_send', False)), config)
     if args.command == 'auth':
         print('Gmail authorization saved privately in the backend.')
-    elif args.command == 'inbox':
-        for message_id in gmail.messages(limit=10):
+    elif args.command == 'confirm-sent':
+        remember_confirmed(gmail, Memory(config), args.message_id)
+        print('Gmail confirmed SENT; actual sent text stored.')
+    elif args.command in ('inbox', 'sent'):
+        for message_id in gmail.messages(label='SENT' if args.command == 'sent' else 'INBOX', limit=10):
             email = gmail.get(message_id)
             print(email.id, email.sender, email.subject)
     elif args.command == 'import-sent':

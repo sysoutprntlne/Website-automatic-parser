@@ -1,6 +1,6 @@
 {
   "run_type": "mock-harness-only",
-  "timestamp_utc": "2026-10-19T02:00:26.068586+00:00",
+  "timestamp_utc": "2026-10-19T02:07:27.660331+00:00",
   "fixture_sha256": "7edf268d533f9fe5a2516b38d45e79c40ff7386616e1bbfe721a638c71dc2e7a",
   "config": {
     "model": "llama3.2",
@@ -13,10 +13,18 @@
     "temperature": 0.2,
     "seed": 42
   },
+  "environment": {
+    "python": "3.14.4",
+    "packages": {
+      "ollama": "0.6.3",
+      "chromadb": "1.5.9",
+      "pydantic": "2.14.1"
+    }
+  },
   "repeats": 1,
   "summary": {
     "baseline": {
-      "latency_seconds": 0.00012160900011319124,
+      "latency_seconds": 9.591550042387098e-05,
       "model_calls": 2,
       "revisions": 0,
       "prompt_tokens": null,
@@ -28,7 +36,7 @@
       "failure_rate": 0.6666666666666666
     },
     "rag": {
-      "latency_seconds": 0.005960372500036708,
+      "latency_seconds": 0.006186757666606961,
       "model_calls": 2,
       "revisions": 0,
       "prompt_tokens": null,
@@ -40,7 +48,7 @@
       "failure_rate": 0.6666666666666666
     },
     "rag_feedback": {
-      "latency_seconds": 0.00614195733366311,
+      "latency_seconds": 0.006098601500222382,
       "model_calls": 3,
       "revisions": 0,
       "prompt_tokens": null,
@@ -61,7 +69,7 @@
         "model_calls": 2,
         "prompt_tokens": null,
         "output_tokens": null,
-        "latency_seconds": 0.004290916998797911,
+        "latency_seconds": 0.0047126009994826745,
         "revisions": 0,
         "retrieved_examples": 2
       },
@@ -97,7 +105,7 @@
         "model_calls": 2,
         "prompt_tokens": null,
         "output_tokens": null,
-        "latency_seconds": 0.00016369800141546875,
+        "latency_seconds": 0.0001224410007125698,
         "revisions": 0,
         "retrieved_examples": 0
       },
@@ -133,7 +141,7 @@
         "model_calls": 3,
         "prompt_tokens": null,
         "output_tokens": null,
-        "latency_seconds": 0.0037401299996417947,
+        "latency_seconds": 0.003343092999784858,
         "revisions": 0,
         "retrieved_examples": 2
       },
@@ -169,7 +177,7 @@
         "model_calls": 2,
         "prompt_tokens": null,
         "output_tokens": null,
-        "latency_seconds": 0.004244970001309412,
+        "latency_seconds": 0.0031118979986786144,
         "revisions": 0,
         "retrieved_examples": 2
       },
@@ -207,7 +215,7 @@
         "model_calls": 2,
         "prompt_tokens": null,
         "output_tokens": null,
-        "latency_seconds": 0.00015519199951086193,
+        "latency_seconds": 9.937700087903067e-05,
         "revisions": 0,
         "retrieved_examples": 0
       },
@@ -245,7 +253,7 @@
         "model_calls": 3,
         "prompt_tokens": null,
         "output_tokens": null,
-        "latency_seconds": 0.00454243999956816,
+        "latency_seconds": 0.004065813000124763,
         "revisions": 0,
         "retrieved_examples": 2
       },
@@ -283,7 +291,7 @@
         "model_calls": 2,
         "prompt_tokens": null,
         "output_tokens": null,
-        "latency_seconds": 0.003526448001139215,
+        "latency_seconds": 0.004040875999635318,
         "revisions": 0,
         "retrieved_examples": 2
       },
@@ -321,7 +329,7 @@
         "model_calls": 2,
         "prompt_tokens": null,
         "output_tokens": null,
-        "latency_seconds": 0.00012579699978232384,
+        "latency_seconds": 0.00010427600136608817,
         "revisions": 0,
         "retrieved_examples": 0
       },
@@ -359,7 +367,7 @@
         "model_calls": 3,
         "prompt_tokens": null,
         "output_tokens": null,
-        "latency_seconds": 0.0036502800012385705,
+        "latency_seconds": 0.0033178150006278884,
         "revisions": 0,
         "retrieved_examples": 2
       },
@@ -397,7 +405,7 @@
         "model_calls": 2,
         "prompt_tokens": null,
         "output_tokens": null,
-        "latency_seconds": 0.003507522000290919,
+        "latency_seconds": 0.004718352000054438,
         "revisions": 0,
         "retrieved_examples": 2
       },
@@ -435,7 +443,7 @@
         "model_calls": 2,
         "prompt_tokens": null,
         "output_tokens": null,
-        "latency_seconds": 0.00012173899995104875,
+        "latency_seconds": 9.967699952539988e-05,
         "revisions": 0,
         "retrieved_examples": 0
       },
@@ -473,7 +481,7 @@
         "model_calls": 3,
         "prompt_tokens": null,
         "output_tokens": null,
-        "latency_seconds": 0.004852283000218449,
+        "latency_seconds": 0.004240842999934102,
         "revisions": 0,
         "retrieved_examples": 2
       },
@@ -511,7 +519,7 @@
         "model_calls": 2,
         "prompt_tokens": null,
         "output_tokens": null,
-        "latency_seconds": 0.01644170799954736,
+        "latency_seconds": 0.016501833000802435,
         "revisions": 0,
         "retrieved_examples": 0
       },
@@ -547,7 +555,7 @@
         "model_calls": 2,
         "prompt_tokens": null,
         "output_tokens": null,
-        "latency_seconds": 5.7217999710701406e-05,
+        "latency_seconds": 5.045500074629672e-05,
         "revisions": 0,
         "retrieved_examples": 0
       },
@@ -583,7 +591,7 @@
         "model_calls": 3,
         "prompt_tokens": null,
         "output_tokens": null,
-        "latency_seconds": 0.016990601001452887,
+        "latency_seconds": 0.017173117001220817,
         "revisions": 0,
         "retrieved_examples": 0
       },
@@ -619,7 +627,7 @@
         "model_calls": 2,
         "prompt_tokens": null,
         "output_tokens": null,
-        "latency_seconds": 0.0037506699991354253,
+        "latency_seconds": 0.004034986000988283,
         "revisions": 0,
         "retrieved_examples": 2
       },
@@ -655,7 +663,7 @@
         "model_calls": 2,
         "prompt_tokens": null,
         "output_tokens": null,
-        "latency_seconds": 0.00010601000030874275,
+        "latency_seconds": 9.926699931384064e-05,
         "revisions": 0,
         "retrieved_examples": 0
       },
@@ -691,7 +699,7 @@
         "model_calls": 3,
         "prompt_tokens": null,
         "output_tokens": null,
-        "latency_seconds": 0.0030760099998587975,
+        "latency_seconds": 0.004450927999641863,
         "revisions": 0,
         "retrieved_examples": 2
       },

@@ -10,7 +10,7 @@
 </details>
 <button id="select">Find emails in this Gmail tab</button>
 <label>Incoming message <select id="messages"><option value="">Select an email</option></select></label>
-<label>API message ID (fallback) <input id="manual" placeholder="From Gmail Show original or API"></label>
+<label>API message ID (fallback) <input id="manual" placeholder="From python -m src.main inbox"></label>
 <button id="summarize">Summarize selected email</button>
 <pre id="summary"></pre>
 <p id="address"></p>
@@ -23,7 +23,7 @@
 <button id="reject">Reject draft</button>
 <p>Open Gmail’s reply composer first. After insertion, check recipients and use Gmail’s Send button.</p>
 <details><summary>Remember a sent reply</summary>
-<p>After sending, supply the sent message’s API ID. The backend verifies Gmail’s SENT label and selected thread before saving your actual sent text.</p>
+<p>After sending, use python -m src.main sent to find the sent message’s API ID. The backend verifies Gmail’s SENT label and selected thread before saving your actual sent text.</p>
 <label>Sent API message ID <input id="sentId"></label>
 <button id="confirm">Verify sent message and remember</button>
 </details>

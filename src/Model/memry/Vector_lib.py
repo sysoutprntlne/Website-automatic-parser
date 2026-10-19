@@ -30,6 +30,8 @@ class Memory:
     @property
     def collection(self):
         if self._collection is None:
+            from pathlib import Path
+            Path(self.config.memory_path).mkdir(parents=True, exist_ok=True, mode=0o700)
             import chromadb
             from chromadb.config import Settings
             self._client = chromadb.PersistentClient(
@@ -103,6 +105,6 @@ class Memory:
     def reset(self, confirmed=False):
         if not confirmed:
             raise ValueError('Memory reset needs explicit confirmation')
-        self._client = self._client or self.collection._client
+        _ = self.collection  # Ensure the lazily owned client exists.
         self._client.delete_collection('sent_examples_v1')
         self._collection = None

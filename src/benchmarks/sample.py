@@ -3,6 +3,8 @@ import argparse
 from dataclasses import asdict, replace
 from datetime import datetime, timezone
 import hashlib
+from importlib.metadata import version
+import platform
 import json
 from pathlib import Path
 import random
@@ -12,6 +14,7 @@ import tempfile
 
 from src.config import Config
 from src.domain import Email, Record
+from pydantic import Field
 from src.Model.Llama import Model
 from src.Model.memry.Vector_lib import Memory
 from src.pipeline import Assistant
@@ -24,8 +27,8 @@ MODES = {'baseline': (False, False), 'rag': (True, False), 'rag_feedback': (True
 class Judgment(Record):
     intent_preservation: bool
     unsupported_claims: list[str]
-    relevance_completeness: int
-    style_fit: int
+    relevance_completeness: int = Field(ge=0, le=5)
+    style_fit: int = Field(ge=0, le=5)
     issues: list[str]
 
 
@@ -110,6 +113,7 @@ def run_benchmark(config, mock=True, repeats=1, fixture_path=FIXTURES, judge=Fal
             'fixture_sha256':hashlib.sha256(fixture_path.read_bytes()).hexdigest(),
             'config':{key:value for key,value in asdict(config).items() if key in
                       ('model','evaluator_model','temperature','seed','retrieval_limit','context_chars','style_chars','thread_limit','attempts')},
+            'environment':{'python':platform.python_version(), 'packages':{name:version(name) for name in ('ollama','chromadb','pydantic')}},
             'repeats':repeats, 'summary':summary, 'results':rows,
             'limitations':['Mock text is fixed and does not measure model quality.' if mock else 'Small synthetic fixture set; no statistical improvement claim.',
                           'Deterministic quality checks are narrow regex/phrase proxies, not factual correctness proof.',

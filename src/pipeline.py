@@ -96,7 +96,7 @@ class Assistant:
             if passed or missing or (draft and draft.missing_information):
                 break
         after = self.model.metrics()
-        metrics = {key: after[key] - before[key] if after[key] is not None and before[key] is not None else None for key in after}
+        metrics = {key: after[key] - (before[key] or 0) if after[key] is not None else None for key in after}
         metrics.update(latency_seconds=time.perf_counter()-started,
                        revisions=max(0, len(history)-1), retrieved_examples=len(examples))
         return Result(summary, draft, passed, issues, history, metrics)

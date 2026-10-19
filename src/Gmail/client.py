@@ -3,29 +3,29 @@ from pathlib import Path
 from src.config import Config, private_write
 from src.Gmail.reader import parse_message
 
-SCOPES = ['https://www.googleapis.com/auth/gmail.readonly',
-          'https://www.googleapis.com/auth/gmail.send']
+SCOPES = ['https://www.googleapis.com/auth/gmail.readonly']
 
 
 class AuthenticationRequired(RuntimeError):
     pass
 
 
-def authenticate(config: Config, interactive=False):
+def authenticate(config: Config, interactive=False, allow_send=False):
     from google.auth.transport.requests import Request
     from google.oauth2.credentials import Credentials
     from google_auth_oauthlib.flow import InstalledAppFlow
     from googleapiclient.discovery import build
+    scopes = SCOPES + (['https://www.googleapis.com/auth/gmail.send'] if allow_send else [])
     creds = None
     try:
         if Path(config.token_path).exists():
-            creds = Credentials.from_authorized_user_file(config.token_path, SCOPES)
+            creds = Credentials.from_authorized_user_file(config.token_path)
         if creds and creds.expired and creds.refresh_token:
             creds.refresh(Request())
-        if not creds or not creds.valid or not creds.has_scopes(SCOPES):
+        if not creds or not creds.valid or not creds.has_scopes(scopes):
             if not interactive:
                 raise AuthenticationRequired('Run the explicit auth command to authorize Gmail')
-            flow = InstalledAppFlow.from_client_secrets_file(config.credentials_path, SCOPES)
+            flow = InstalledAppFlow.from_client_secrets_file(config.credentials_path, scopes)
             creds = flow.run_local_server(port=0)
     except AuthenticationRequired:
         raise
