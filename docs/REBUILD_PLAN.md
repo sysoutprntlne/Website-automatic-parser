@@ -45,3 +45,14 @@ All automated checks use synthetic content and mocked Gmail/model services.
 Inspect actual Chroma persistence without touching the existing private database.
 Keep attempt metadata content-free by default. Document limitations and separate
 mock verification from live Gmail/Ollama/browser validation.
+
+## Automated reply dashboard follow-up
+
+Preserve the local-only backend and Gmail-controlled send flow. Add qa/inbox-triage
+for bounded paginated inbox scanning, metadata-based spam/automation filtering,
+latest-message thread checks, explicit reasons and tests. Integrate, then add
+qa/reply-dashboard for a same-origin local dashboard with automatic refresh,
+needs-reply/review/filtered queues, search, summary/draft review, and Gmail handoff.
+Verify with synthetic Gmail services, HTTP tests and an actual Chrome dashboard
+smoke test. Never access the user's mailbox during QA or move/delete mail as part
+of filtering. Reuse the existing protected API and keep OAuth in Python.

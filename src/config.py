@@ -22,6 +22,9 @@ class Config:
     backend_token_path: str = "private/backend-token"
     extension_origin: str = ""
     port: int = 8765
+    dashboard_limit: int = 100
+    dashboard_refresh_seconds: int = 60
+    dashboard_query: str = ""
 
     def __post_init__(self):
         for name in ("style_chars", "context_chars", "thread_limit", "attempts", "port"):
@@ -29,6 +32,8 @@ class Config:
                 raise ValueError(f"{name} must be positive")
         if not 0 <= self.retrieval_limit <= 30 or self.attempts > 10:
             raise ValueError("retrieval_limit must be 0..30 and attempts 1..10")
+        if not 1 <= self.dashboard_limit <= 500 or self.dashboard_refresh_seconds < 30:
+            raise ValueError("Dashboard limit must be 1..500 and refresh at least 30 seconds")
         if not 1 <= self.port <= 65535:
             raise ValueError("Invalid port")
 

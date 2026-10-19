@@ -19,6 +19,10 @@ class Email(Record):
     message_id: str = ""
     references: str = ""
     sent_by_user: bool = False
+    labels: list[str] = Field(default_factory=list)
+    auto_submitted: str = ""
+    precedence: str = ""
+    list_mail: bool = False
 
 
 class Summary(Record):

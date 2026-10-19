@@ -2,9 +2,10 @@
 import base64
 import re
 from email import policy
-from email.parser import BytesParser
+from email.parser import BytesParser, HeaderParser
 from email.utils import getaddresses
 from html.parser import HTMLParser
+from html import unescape
 
 from src.domain import Email
 
@@ -48,11 +49,25 @@ def parse_message(raw, max_chars=16000):
             parser = TextHTML()
             parser.feed(body)
             body = ''.join(parser.parts).strip()
+    return from_headers(raw, msg, body[:max_chars])
+
+
+def parse_metadata(raw, max_chars=300):
+    headers = raw.get('payload', {}).get('headers', [])
+    msg = HeaderParser(policy=policy.default).parsestr('\r\n'.join(
+        item['name'] + ': ' + item['value'] for item in headers) + '\r\n\r\n')
+    return from_headers(raw, msg, unescape(raw.get('snippet', ''))[:max_chars])
+
+
+def from_headers(raw, msg, body):
     headers = lambda name: str(msg.get(name, ''))
     return Email(id=raw['id'], thread_id=raw.get('threadId', ''),
                  sender=next(iter(addresses(headers('From'))), ''),
                  to=addresses(headers('To')), cc=addresses(headers('Cc')),
                  reply_to=addresses(headers('Reply-To')), subject=headers('Subject'),
-                 body=body[:max_chars], timestamp=str(raw.get('internalDate', '')),
+                 body=body, timestamp=str(raw.get('internalDate', '')),
                  message_id=headers('Message-ID'), references=headers('References'),
-                 sent_by_user='SENT' in raw.get('labelIds', []))
+                 sent_by_user='SENT' in raw.get('labelIds', []), labels=raw.get('labelIds', []),
+                 auto_submitted=headers('Auto-Submitted').lower().strip(),
+                 precedence=headers('Precedence').lower().strip(),
+                 list_mail=bool(headers('List-Unsubscribe') or headers('List-Id')))

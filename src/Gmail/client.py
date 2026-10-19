@@ -1,7 +1,7 @@
 """Gmail access is explicit and injectable for QA; read errors propagate."""
 from pathlib import Path
 from src.config import Config, private_write
-from src.Gmail.reader import parse_message
+from src.Gmail.reader import parse_message, parse_metadata
 
 SCOPES = ['https://www.googleapis.com/auth/gmail.readonly']
 
@@ -45,7 +45,7 @@ class GmailClient:
             raise ValueError('Message limit must be 0..1000')
         result, page = [], None
         while len(result) < limit:
-            args = dict(userId='me', labelIds=[label], maxResults=min(100, limit-len(result)), q=query)
+            args = dict(userId='me', labelIds=[label], maxResults=min(100, limit-len(result)), q=query, includeSpamTrash=False)
             if page:
                 args['pageToken'] = page
             response = self.service.users().messages().list(**args).execute()
@@ -54,6 +54,36 @@ class GmailClient:
             if not page:
                 break
         return result[:limit]
+
+    def inbox_page(self, limit=100, query='', page_token=''):
+        if not 1 <= limit <= 500:
+            raise ValueError('Inbox page limit must be 1..500')
+        args = dict(userId='me', labelIds=['INBOX'], maxResults=limit,
+                    q=query, includeSpamTrash=False)
+        if page_token:
+            args['pageToken'] = page_token
+        return self.service.users().messages().list(**args).execute()
+
+    def metadata(self, message_id):
+        result = self.service.users().messages().get(
+            userId='me', id=message_id, format='metadata',
+            metadataHeaders=['From','To','Cc','Reply-To','Subject','Message-ID',
+                             'Auto-Submitted','Precedence','List-Unsubscribe','List-Id']).execute()
+        return parse_metadata(result)
+
+    def latest_in_thread(self, email):
+        if not email.thread_id:
+            return email
+        result = self.service.users().threads().get(
+            userId='me', id=email.thread_id, format='metadata',
+            metadataHeaders=['From','To','Cc','Reply-To','Subject','Message-ID',
+                             'Auto-Submitted','Precedence','List-Unsubscribe','List-Id']).execute()
+        candidates = [item for item in result.get('messages', [])
+                      if not {'DRAFT','SPAM','TRASH'} & set(item.get('labelIds', []))]
+        if not candidates:
+            return email
+        latest = max(candidates, key=lambda item: int(item.get('internalDate', '0')))
+        return parse_metadata(latest)
 
     def get(self, message_id):
         result = self.service.users().messages().get(
