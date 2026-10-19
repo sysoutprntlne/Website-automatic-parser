@@ -26,3 +26,15 @@ as a recovered lost branch. Git fsck reported no unreachable recovery objects.
 The final audit restored runtime copies removed by earlier Git transitions from the
 original tracked snapshot, verifying the token/log/SQLite bytes. All later integration
 states already exclude them, so the final feature merge preserves those ignored files.
+
+## Automatic reply dashboard follow-up
+
+- `qa/inbox-triage` — aeceb51: paginated metadata scanning, reply/review/filtered
+  queues, thread deduplication/latest-SENT check, reasons and caching.
+- `qa/reply-dashboard` — see branch log: local authenticated dashboard, automatic
+  refresh, search and pagination, summaries and edited drafts, Gmail handoff,
+  synthetic dashboard mode, HTTP and actual Chrome browser validation.
+
+Both feature branches start from integration and preserve the previous commits.
+The follow-up expands validation to 36 synthetic tests and the dashboard browser
+smoke test; no mailbox access, Gmail writes, deployment or publication is performed.

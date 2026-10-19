@@ -66,3 +66,24 @@ feedback revisions, human-reviewed delivery, and a Manifest V3 Gmail extension b
 by an authenticated loopback API. Added 29 automated synthetic tests, a Chrome popup
 integration smoke test, and a reproducible three-configuration benchmark harness.
 Live Gmail integration and real-model quality benchmarking remain pending.
+
+## Automated dashboard follow-up
+
+The expanded suite has 36 passing tests. New checks cover metadata-based
+classification, uncertain human messages, queue deduplication/cache/partial errors,
+pagination, latest SENT detection while ignoring drafts, same-origin authenticated
+queue access, static asset allowlisting, Host/origin rejection, and absence of
+email/token data in the unauthenticated dashboard shell.
+
+The Chrome smoke test now verifies the actual local dashboard as well as the MV3
+popup: automatic queue loading after pairing, separated automation filters,
+summary/drafting/evaluator display, rejection, safe text rendering of a malicious
+HTML-like subject, and cleanup on disconnect. A synthetic screenshot is written
+to /tmp/gmail-reply-dashboard.png. This still does not access real Gmail or prove
+live model behavior. No live credentials were opened during this follow-up.
+
+The dashboard uses Gmail-controlled sending after copying the reviewed text. It
+refreshes while open; closed/background tabs do not scan. It offers paginated inbox
+access with per-page counts/search and configurable filters. Rules can misclassify
+mail, and preview-based request detection cannot establish that a reply is mandatory.
+Filtered mail stays inspectable; no mailbox writes occur during classification.

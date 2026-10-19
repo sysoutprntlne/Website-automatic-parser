@@ -24,7 +24,8 @@ def main(argv=None):
     memory.add_argument('--confirm-reset', action='store_true')
     draft = commands.add_parser('reply', help='Review/edit/regenerate/reject a reply locally')
     draft.add_argument('message_id')
-    commands.add_parser('serve', help='Run authenticated loopback backend for extension')
+    serve_command = commands.add_parser('serve', help='Run local reply dashboard and extension backend')
+    serve_command.add_argument('--demo', action='store_true', help='Synthetic dashboard, no Gmail or Ollama required')
     args = parser.parse_args(argv)
     config = Config.from_env()
     from src.pipeline import Assistant, remember_confirmed
@@ -37,7 +38,7 @@ def main(argv=None):
         return
     if args.command == 'serve':
         from src.backend import serve
-        serve(config)
+        serve(config, demo=args.demo)
         return
     if args.command == 'memory':
         mem = Memory(config)

@@ -54,3 +54,22 @@ class TriageTests(unittest.TestCase):
         self.assertEqual(queue.scan()['next_page_token'],'older')
         queue.scan(page_token='older')
         gmail.inbox_page.assert_called_with(limit=1,query='',page_token='older')
+
+    def test_gmail_pagination_and_latest_sent_ignores_drafts(self):
+        from unittest.mock import MagicMock
+        from src.Gmail.client import GmailClient
+        service = MagicMock()
+        client = GmailClient(service)
+        service.users().messages().list().execute.return_value = {'messages':[], 'nextPageToken':'next'}
+        self.assertEqual(client.inbox_page(page_token='older')['nextPageToken'],'next')
+        args = service.users().messages().list.call_args.kwargs
+        self.assertFalse(args['includeSpamTrash'])
+        self.assertEqual(args['pageToken'],'older')
+        self.assertEqual(args['labelIds'],['INBOX'])
+        service.users().threads().get().execute.return_value = {'messages':[
+            {'id':'incoming','internalDate':'100','labelIds':['INBOX'],'payload':{}},
+            {'id':'sent','internalDate':'200','labelIds':['SENT'],'payload':{}},
+            {'id':'draft','internalDate':'300','labelIds':['DRAFT'],'payload':{}}]}
+        latest = client.latest_in_thread(DEMO_EMAIL)
+        self.assertEqual(latest.id,'sent')
+        self.assertTrue(latest.sent_by_user)

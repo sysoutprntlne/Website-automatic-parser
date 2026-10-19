@@ -55,7 +55,7 @@ class ReplyQueue:
                 seen.add(key)
                 rows.append(dict(message_id=latest.id, thread_id=latest.thread_id,
                                  sender=latest.sender, subject=latest.subject, preview=latest.body[:300],
-                                 timestamp=latest.timestamp, unread='UNREAD' in latest.labels,
+                                 timestamp=latest.timestamp, unread='UNREAD' in latest.labels, sent_by_user=latest.sent_by_user,
                                  category=category, reason=reason))
             except Exception:
                 # One unavailable/deleted message must not hide the rest of the queue.

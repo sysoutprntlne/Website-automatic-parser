@@ -5,7 +5,7 @@ messages retrieved from persistent Chroma memory. Personalization is RAG: model
 weights are unchanged. Every draft needs human review. Evaluator approval is a
 heuristic and never triggers sending.
 
-The backend, CLI, and minimal Gmail extension are implemented. Automated QA uses
+The local reply dashboard, backend, CLI, and minimal Gmail extension are implemented. Automated QA uses
 synthetic messages and mocked Gmail/model services; live Gmail behavior still
 needs manual validation. See [validation and limitations](docs/VALIDATION.md),
 [branch history](docs/DELIVERY.md), and [inspection plan](docs/REBUILD_PLAN.md).
@@ -91,6 +91,67 @@ Inspect hides subjects and bodies by default. Delete targets one source ID. Rese
 only removes this application's versioned collection, not other Chroma collections.
 Keep memory in a private directory; treat its contents as private email data.
 
+## Automatic inbox dashboard
+
+Start the local application and open **http://127.0.0.1:8765/**:
+
+```bash
+# Credential-free preview: synthetic mailbox and simulated model outputs
+.venv/bin/python -m src.main serve --demo
+# Real inbox: authorize first, then run the local dashboard
+.venv/bin/python -m src.main auth
+.venv/bin/python -m src.main serve
+```
+
+Pair using the existing private token in `private/backend-token`. The dashboard
+keeps this token only in tab session storage; Disconnect clears it along with
+loaded email/draft content. No extension installation is needed for the dashboard.
+The synthetic mode shows a visible demo banner and cannot confirm sends or store
+messages. Use it to explore without Gmail or Ollama.
+
+The dashboard automatically loads and refreshes the inbox while open. It includes
+both read and unread mail, groups inbox messages by thread, checks the latest
+non-draft thread message, and suggests three queues:
+
+- **Needs reply:** questions or requests detected in the subject/preview.
+- **To review:** human messages without a clear request in the preview, including
+  ambiguous messages that should not silently disappear.
+- **Filtered:** automatic/bulk/list mail, no-reply addresses, Gmail promotions, and
+  threads whose latest message was sent by you. Every item has a visible reason.
+
+Gmail spam/trash are excluded from inbox listing (`includeSpamTrash=False`), with
+additional label checks for defense. Filtering changes only the dashboard; it never
+moves, deletes, archives, marks read, or sends an automatic response to messages.
+It relies on Gmail labels and deterministic metadata rules, not an infallible spam
+classifier. A personal email can have a subscription header and be filtered by
+mistake: inspect Filtered, select it, and draft deliberately if needed. A sent latest
+message suggests you already replied, not that every question was answered.
+
+Browse all inbox pages with **Older/Newer**. Counts and search apply to the current
+page, not your entire mailbox. Each refresh scans one bounded page; default size
+100 (configurable 1..500 via `REPLY_DASHBOARD_LIMIT`). The default refresh is 60
+seconds (minimum 30) via `REPLY_DASHBOARD_REFRESH_SECONDS`. Background tabs pause
+polling, closed tabs do not poll, and short-lived backend caching limits repeat
+API reads. Refresh inbox forces a fresh scan. `REPLY_DASHBOARD_QUERY` optionally
+adds a Gmail search filter, such as `after:2026/01/01`. Read-only metadata scans make
+no model calls. Deleted/unavailable individual messages do not discard the whole
+page; a partial-failure notice indicates an incomplete scan.
+
+Select a conversation to summarize its actual incoming email and thread with your
+local model. Enter your short intent, generate/evaluate a draft, edit or regenerate,
+and copy the reply. **Open in Gmail** links to the conversation; check that the
+account matches the backend's authorized account (the link defaults to account
+slot zero). Paste the reviewed reply into Gmail and use Gmail's normal Send button.
+The optional extension remains available for inline composer insertion. The
+application does not invent decisions or availability to draft without your intent.
+To review automated messages or suspected false positives, use Filtered. Already
+replied threads can be opened in Gmail without generating another reply.
+
+After sending, use the dashboard's **Remember a reply after sending** section with
+the sent API ID. It uses the same independent Gmail SENT/thread verification as
+the extension. Merely copying or discarding a draft never updates writing memory.
+Automatic ingestion of every sent message is not enabled.
+
 ## Gmail extension
 
 1. Open `chrome://extensions`, enable Developer mode, choose **Load unpacked**,
@@ -137,7 +198,7 @@ storage, and only loopback host access. Chrome match patterns cannot restrict th
 host permission to a port; extension CSP restricts requests to port 8765. Use that
 port unless you also update `extension/popup.js` and manifest CSP. There are no
 remote scripts, page message bridge, Gmail cookies, or OAuth secrets in browser code.
-The backend binds only `127.0.0.1`, validates exact Host and configured browser
+The backend binds only `127.0.0.1`, validates exact Host, its own dashboard Origin and the optional configured extension
 Origin, requires a random bearer token, validates JSON fields and sizes, disables
 content logging, and has no send endpoint. Authenticated nonbrowser requests may
 omit Origin; any supplied Origin must match. It is a local single-user service,
@@ -152,7 +213,7 @@ supported. The extension does not change Gmail recipients or subject automatical
 
 ## Optional CLI review and delivery
 
-The extension is the intended interface. The CLI also supports an explicit send
+The dashboard is the main workspace; the extension offers Gmail insertion. The CLI also supports an explicit send
 flow if you authorize the additional Gmail send scope:
 
 ```bash
@@ -225,7 +286,7 @@ text. External runtime logging, OS backups, and local disk security remain under
 your control. Prompt isolation and evaluation reduce risk but cannot prove that a
 real model will resist every malicious email or avoid unsupported claims.
 
-The real popup can be tested in a fresh Chrome profile with synthetic services:
+The real popup and local dashboard can be tested in a fresh Chrome profile with synthetic services:
 
 ```bash
 .venv/bin/python scripts/browser_smoke.py
@@ -233,6 +294,7 @@ The real popup can be tested in a fresh Chrome profile with synthetic services:
 
 This needs Google Chrome, local socket/process permission, and an unused port 8765.
 It uses Chrome's pipe-based unpacked-extension loader in an isolated temporary profile,
-not your browser profile. It verifies popup pairing, real authenticated local HTTP
-summary/generation, evaluation display and rejection; it does not open Gmail or
+not your browser profile. It verifies popup and dashboard pairing, authenticated local HTTP
+queue filtering, summary/generation, evaluation display, rejection, safe rendering
+of malicious subject text, and session cleanup; it does not open Gmail or
 verify live composer selectors. No real mail is sent by automated checks.
