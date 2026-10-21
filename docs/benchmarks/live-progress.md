@@ -81,3 +81,7 @@ runs mostly characterize runtime variability, not independent quality observatio
 Use more held-out cases and human review before claiming a quality improvement.
 If the smaller model meets the needed quality and latency, use it as the everyday
 default; retain the larger model for optional comparison rather than requiring it.
+
+Completed CLI runs also write a separate `comparison.json` with paired differences
+between configurations, measurement coverage and explicit interpretation limits.
+See [Final comparison JSON](comparison.md) for the schema and calculations.

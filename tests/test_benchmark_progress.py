@@ -103,3 +103,4 @@ class BenchmarkProgressTests(unittest.TestCase):
             latest = json.loads((Path(directory) / "progress.json").read_text())
             self.assertEqual(latest["event"], "interrupted")
             self.assertFalse((Path(directory) / "results.json").exists())
+            self.assertFalse((Path(directory) / "comparison.json").exists())

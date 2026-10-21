@@ -26,6 +26,7 @@ from src.Model.memry.Vector_lib import Memory
 from src.pipeline import Assistant
 from src.demo import DemoModel
 from src.benchmarks.progress import ProgressOutput, TrialProgress
+from src.benchmarks.comparison import build_comparison
 
 FIXTURES = Path(__file__).resolve().parents[2] / "tests/fixtures/benchmark.json"
 MODES = {"baseline": (False, False), "rag": (True, False), "rag_feedback": (True, True)}
@@ -399,8 +400,16 @@ def main():
         progress.stopped("run_failed")
         raise
     (output / "results.json").write_text(json.dumps(data, indent=2) + "\n")
+    comparison = build_comparison(data)
+    comparison_path = output / "comparison.json"
+    temporary = output / "comparison.json.tmp"
+    temporary.write_text(
+        json.dumps(comparison, indent=2, allow_nan=False) + "\n", encoding="utf-8"
+    )
+    temporary.replace(comparison_path)
     (output / "report.md").write_text(report(data))
     print(report(data))
+    print(f"Comparison JSON: {comparison_path}")
 
 
 if __name__ == "__main__":
