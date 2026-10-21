@@ -8,7 +8,8 @@ from src.config import Config
 
 class BenchmarkTests(unittest.TestCase):
     def test_modes_and_metrics(self):
-        data = run_benchmark(Config())
+        events = []
+        data = run_benchmark(Config(), on_progress=events.append)
         self.assertEqual(data["run_type"], "mock-harness-only")
         self.assertEqual(len(data["results"]), 18)
         for row in data["results"]:
@@ -23,6 +24,19 @@ class BenchmarkTests(unittest.TestCase):
             elif row["mode"].startswith("rag"):
                 self.assertGreater(row["metrics"]["retrieved_examples"], 0)
         self.assertIn("mock-harness-only", report(data))
+        self.assertEqual(events[0]["event"], "run_started")
+        self.assertEqual(events[0]["completed"], 0)
+        self.assertEqual(events[-1]["event"], "run_finished")
+        self.assertEqual(events[-1]["completed"], 18)
+        self.assertEqual(events[-1]["summary"], data["summary"])
+        completed = [event for event in events if event["event"] == "trial_finished"]
+        self.assertEqual(
+            [event["completed"] for event in completed], list(range(1, 19))
+        )
+        for event in completed:
+            self.assertNotIn("draft", event)
+            self.assertNotIn("body", json.dumps(event))
+        self.assertEqual(len({event["run_id"] for event in events}), 1)
 
     def test_reject_leaked_target(self):
         fixtures = json.loads(FIXTURES.read_text())
