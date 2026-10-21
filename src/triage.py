@@ -4,7 +4,7 @@ import re
 import time
 from src.config import Config
 
-
+# Filtering emails to different piles
 def classify(email):
     labels = set(email.labels)
     if labels & {"SPAM", "TRASH", "DRAFT"}:

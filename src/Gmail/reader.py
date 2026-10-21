@@ -41,7 +41,7 @@ def addresses(value):
         )
     )
 
-
+# Creates usable format for model
 def parse_message(raw, max_chars=16000):
     """Decode Gmail format=raw using Python's charset-aware MIME parser."""
     encoded = raw["raw"]
