@@ -1,4 +1,5 @@
 """Small validated objects shared by Gmail, models and the interface."""
+
 from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 
@@ -59,6 +60,7 @@ class Reply(Record):
     @classmethod
     def addresses(cls, values):
         import re
+
         if any(not re.fullmatch(r"[^\s<>@,;]+@[^\s<>@,;]+", value) for value in values):
             raise ValueError("Use bare valid email addresses")
         return values

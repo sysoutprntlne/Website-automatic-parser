@@ -9,7 +9,7 @@ import unittest
 class ImportTests(unittest.TestCase):
     def test_imports_do_not_authenticate_open_database_or_call_models(self):
         root = str(Path(__file__).resolve().parents[1])
-        script = '''
+        script = """
 import builtins, importlib, pathlib
 original = builtins.__import__
 def guarded(name, *args, **kwargs):
@@ -22,8 +22,13 @@ for module in ('src.main','src.pipeline','src.backend','src.Gmail.reader','src.G
                'src.eval_model.eval','src.benchmarks.sample'):
     importlib.import_module(module)
 assert not list(pathlib.Path('.').iterdir()), 'Import created files'
-'''
+"""
         with tempfile.TemporaryDirectory() as directory:
-            result = subprocess.run([sys.executable,'-B','-c',script],cwd=directory,
-                                    env=dict(os.environ,PYTHONPATH=root),capture_output=True,text=True)
-            self.assertEqual(result.returncode,0,result.stderr)
+            result = subprocess.run(
+                [sys.executable, "-B", "-c", script],
+                cwd=directory,
+                env=dict(os.environ, PYTHONPATH=root),
+                capture_output=True,
+                text=True,
+            )
+            self.assertEqual(result.returncode, 0, result.stderr)
