@@ -64,7 +64,8 @@ class Assistant:
             context_data(*self._bounded(email, thread), [], ""),
             Summary,
         )
-
+        
+# For incoming emails to fit character limit. Current email is given priority
     def _bounded(self, email, thread):
         budget = self.config.context_chars
         email = email.model_copy(update={"body": email.body[:budget]})
@@ -151,6 +152,7 @@ def remember_confirmed(gmail, memory, sent_message_id):
     memory.remember_sent(email)
     return email
 
+#Initialize Start
 
 def start():
     from src.main import main
