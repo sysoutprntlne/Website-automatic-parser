@@ -1,0 +1,8 @@
+body { font: 14px system-ui, sans-serif; width: 400px; padding: 14px; color: #182637; background: #f7f9fc; }
+h1 { font-size: 21px; margin-top: 0; }
+label { display: block; margin: 10px 0; }
+input:not([type=checkbox]), textarea, select { box-sizing: border-box; width: 100%; margin-top: 4px; padding: 8px; border: 1px solid #a9b6c6; border-radius: 4px; }
+button { padding: 8px; margin: 4px 0; cursor: pointer; }
+pre { white-space: pre-wrap; }
+#status { font-weight: 600; }
+code { overflow-wrap: anywhere; }

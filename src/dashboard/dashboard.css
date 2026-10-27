@@ -1,0 +1,40 @@
+* { box-sizing: border-box; }
+body { margin: 0; color: #222; background: white; font: 14px Arial, sans-serif; }
+main { padding: 16px; }
+button, input, textarea { font: inherit; padding: 6px 8px; }
+button { cursor: pointer; }
+button:disabled { cursor: default; }
+button.active { font-weight: bold; outline: 1px solid #555; }
+a { color: #174c9e; }
+label { display: block; margin: 12px 0 4px; }
+input, textarea { min-width: 0; }
+textarea { display: block; width: 100%; resize: vertical; margin-bottom: 8px; }
+.controls, nav, .toolbar, .pagination { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+.controls input { flex: 1; }
+.toolbar { justify-content: space-between; margin: 16px 0; }
+.workspace { display: grid; grid-template-columns: minmax(260px, 1fr) minmax(320px, 2fr); border-top: 1px solid #ccc; }
+.inbox-panel { padding: 12px 16px 12px 0; border-right: 1px solid #ccc; }
+#search { width: 100%; }
+.sync, #status, .sender-row, .classification { font-size: 12px; color: #555; }
+.message-list { max-height: 70vh; overflow: auto; }
+.message { display: block; width: 100%; padding: 12px 8px; text-align: left; background: white; color: inherit; border: 0; border-bottom: 1px solid #ddd; }
+.message:hover, .message.selected { background: #eee; }
+.sender-row { display: flex; justify-content: space-between; gap: 8px; }
+.sender-row span:first-child { overflow-wrap: anywhere; }
+.message-subject { display: block; margin: 6px 0; }
+.message p { margin: 4px 0; overflow-wrap: anywhere; }
+.pagination { justify-content: space-between; margin-top: 12px; }
+.detail-panel { padding: 12px 0 12px 20px; min-width: 0; }
+#subject { font-weight: bold; }
+#recipients, #filter-reason { overflow-wrap: anywhere; }
+.summary-block { border-top: 1px solid #ddd; margin-top: 16px; }
+pre { white-space: pre-wrap; overflow-wrap: anywhere; max-height: 300px; overflow: auto; font: inherit; }
+details { margin: 16px 0; }
+#draft-section { margin-top: 16px; }
+#issues, #evaluation { font-size: 12px; }
+[hidden] { display: none !important; }
+@media (max-width: 700px) {
+  .workspace { grid-template-columns: 1fr; }
+  .inbox-panel { border-right: 0; border-bottom: 1px solid #ccc; padding-right: 0; }
+  .detail-panel { padding-left: 0; }
+}

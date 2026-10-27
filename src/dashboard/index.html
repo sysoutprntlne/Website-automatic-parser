@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Email</title><link rel="stylesheet" href="/dashboard.css"></head>
+<body><main>
+<form id="connect"><div id="pairing"><label for="token">Token from <code>private/backend-token</code></label><div class="controls"><input type="password" id="token" autocomplete="off" required><button type="submit">Connect</button></div></div></form>
+<p id="demo-mode" hidden>Demo: simulated emails and replies.</p>
+<div class="toolbar"><nav aria-label="Email filters">
+<button class="active" data-category="needs_reply">Needs reply (<span id="count-needs_reply">0</span>)</button>
+<button data-category="review">Review (<span id="count-review">0</span>)</button>
+<button data-category="filtered">Filtered (<span id="count-filtered">0</span>)</button>
+</nav><div class="controls"><button id="refresh">Refresh</button><button id="disconnect">Disconnect</button></div></div>
+<div class="workspace">
+<section class="inbox-panel" aria-label="Emails"><input id="search" type="search" aria-label="Search this page" placeholder="Search emails"><p class="sync"><span id="live">Paused</span> · <span id="sync">Connect to load emails.</span></p>
+<div id="list" class="message-list"><p>Connect to load emails.</p></div>
+<div class="pagination"><button id="newer" disabled>Newer</button><span id="page-label">Page 1</span><button id="older" disabled>Older</button></div></section>
+<section class="detail-panel" aria-label="Reply"><p id="placeholder">Select an email.</p>
+<div id="detail" hidden><a id="gmail" target="_blank" rel="noopener noreferrer">Open in Gmail</a><p id="subject"></p><p id="recipients"></p><p id="filter-reason"></p>
+<div class="summary-block"><p id="overview"></p><ul id="requests"></ul><p id="deadlines"></p></div>
+<details><summary>Original email</summary><pre id="original"></pre></details>
+<label for="intent">Reply intent</label><textarea id="intent" rows="2"></textarea><button id="generate">Generate reply</button>
+<div id="draft-section" hidden><p id="evaluation"></p><p id="issues"></p><label for="draft">Edit reply</label><textarea id="draft" rows="8"></textarea><div class="controls"><button id="copy">Copy reply</button><button id="reject">Discard</button></div></div>
+<details><summary>Save sent reply to memory</summary><label for="sent-id">Sent message ID (<code>python -m src.main sent</code>)</label><div class="controls"><input id="sent-id"><button id="remember">Verify and save</button></div></details>
+</div></section></div>
+<p id="status" role="status" aria-live="polite"></p>
+</main><script src="/dashboard.js"></script></body></html>

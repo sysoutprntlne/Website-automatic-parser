@@ -1,0 +1,10 @@
+{
+  "manifest_version": 3,
+  "name": "Personal Gmail Reply Assistant",
+  "version": "0.1.0",
+  "description": "Review local personalized drafts and insert them into Gmail replies.",
+  "permissions": ["activeTab", "scripting", "storage"],
+  "host_permissions": ["http://127.0.0.1/*"],
+  "action": {"default_popup": "popup.html"},
+  "content_security_policy": {"extension_pages": "script-src 'self'; object-src 'none'; connect-src http://127.0.0.1:8765"}
+}
