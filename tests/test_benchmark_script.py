@@ -45,9 +45,12 @@ class BenchmarkScriptTests(unittest.TestCase):
                     command = call.args[0]
                     self.assertIn("--real", command)
                     self.assertEqual(command[command.index("--repeats") + 1], "3")
-                    self.assertEqual(call.kwargs["env"]["REPLY_MODEL"], "llama3.2")
                     self.assertEqual(
-                        call.kwargs["env"]["REPLY_EVALUATOR_MODEL"], "llama3.2"
+                        call.kwargs["env"]["REPLY_MODEL"], "llama3.2:1b-instruct-q4_K_M"
+                    )
+                    self.assertEqual(
+                        call.kwargs["env"]["REPLY_EVALUATOR_MODEL"],
+                        "llama3.2:1b-instruct-q4_K_M",
                     )
                     self.assertEqual(call.kwargs["cwd"], ROOT)
                     self.assertTrue(call.kwargs["check"])
@@ -56,15 +59,25 @@ class BenchmarkScriptTests(unittest.TestCase):
             batches = list(Path(directory).iterdir())
             self.assertEqual(len(batches), 2)
             for batch in batches:
-                standard = json.loads((batch / "llama3.2_results.json").read_text())
+                standard = json.loads(
+                    (batch / "llama3.2_1b-instruct-q4_K_M_results.json").read_text()
+                )
                 judged = json.loads(
-                    (batch / "llama3.2_model_judgment_results.json").read_text()
+                    (
+                        batch
+                        / "llama3.2_1b-instruct-q4_K_M_model_judgment_results.json"
+                    ).read_text()
                 )
                 self.assertFalse(standard["judged"])
                 self.assertTrue(judged["judged"])
-                self.assertTrue((batch / "llama3.2_comparison.json").exists())
                 self.assertTrue(
-                    (batch / "llama3.2_model_judgment_comparison.json").exists()
+                    (batch / "llama3.2_1b-instruct-q4_K_M_comparison.json").exists()
+                )
+                self.assertTrue(
+                    (
+                        batch
+                        / "llama3.2_1b-instruct-q4_K_M_model_judgment_comparison.json"
+                    ).exists()
                 )
 
     def test_failed_first_run_stops_before_judged_run(self):
@@ -134,5 +147,11 @@ class BenchmarkScriptTests(unittest.TestCase):
                 self.assertEqual(error.exception.code, 1)
                 runner.assert_called_once()
             batch = next(Path(directory).iterdir())
-            self.assertTrue((batch / "llama3.2_results.json").exists())
-            self.assertFalse((batch / "llama3.2_model_judgment_results.json").exists())
+            self.assertTrue(
+                (batch / "llama3.2_1b-instruct-q4_K_M_results.json").exists()
+            )
+            self.assertFalse(
+                (
+                    batch / "llama3.2_1b-instruct-q4_K_M_model_judgment_results.json"
+                ).exists()
+            )
