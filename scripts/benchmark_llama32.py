@@ -55,7 +55,7 @@ def run_once(batch, prefix, judged, repeats, environment, quiet=False):
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--repeats", type=int, default=3)
-    parser.add_argument("--model", default="llama3.2")
+    parser.add_argument("--model", default="llama3.2:1b-instruct-q4_K_M")
     parser.add_argument(
         "--evaluator-model",
         help="Feedback evaluator and independent judge model (defaults to --model)",

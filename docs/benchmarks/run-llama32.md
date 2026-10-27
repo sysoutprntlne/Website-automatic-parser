@@ -24,11 +24,11 @@ statistical significance.
 Outputs have a fresh UTC timestamp and unique suffix each time. Defaults:
 
 ```text
-benchmark-results/llama3.2_<UTC timestamp>_<unique suffix>/
-    llama3.2_results.json
-    llama3.2_comparison.json
-    llama3.2_model_judgment_results.json
-    llama3.2_model_judgment_comparison.json
+benchmark-results/llama3.2_1b-instruct-q4_K_M_<UTC timestamp>_<unique suffix>/
+    llama3.2_1b-instruct-q4_K_M_results.json
+    llama3.2_1b-instruct-q4_K_M_comparison.json
+    llama3.2_1b-instruct-q4_K_M_model_judgment_results.json
+    llama3.2_1b-instruct-q4_K_M_model_judgment_comparison.json
     standard/
         results.json
         comparison.json
@@ -58,7 +58,7 @@ both the batch directory and each named JSON file as it is saved.
   --output benchmark-results
 ```
 
-Default generator and evaluator/judge are both `llama3.2`. The script explicitly
+Default generator and evaluator/judge are both `llama3.2:1b-instruct-q4_K_M`. The script explicitly
 sets REPLY_MODEL and REPLY_EVALUATOR_MODEL in its child processes, so an older
 export selecting another model cannot silently change these runs. `--model`
 changes the generator and default evaluator together; `--evaluator-model` overrides

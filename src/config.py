@@ -7,8 +7,8 @@ from pathlib import Path
 
 @dataclass(frozen=True)
 class Config:
-    model: str = "llama3.2"
-    evaluator_model: str = "llama3.2"
+    model: str = "llama3.2:1b-instruct-q4_K_M"
+    evaluator_model: str = "llama3.2:1b-instruct-q4_K_M"
     ollama_host: str = "http://127.0.0.1:11434"
     memory_path: str = "private/memory"
     retrieval_limit: int = 4
