@@ -31,8 +31,10 @@ the benchmark records installed versions, settings, fixture hash, and seed.
 Install and run [Ollama](https://docs.ollama.com/quickstart), then install a local
 model before using real drafting:
 
+*Serve required for Linux setup
+
 ```bash
-ollama pull llama3.2
+ollama pull llama3.2:1b-instruct-q4_K_M
 ollama serve
 ```
 
@@ -43,7 +45,7 @@ no installed models, so real generation and benchmarking have not been verified.
 
 [.env.example](.env.example) lists supported `REPLY_*` environment variables.
 Export values in your shell; the application does not automatically load `.env`.
-Defaults: generation/evaluation model `llama3.2`, host `127.0.0.1:11434`, memory
+Defaults: generation/evaluation model `llama3.2:1b-instruct-q4_K_M`, host `127.0.0.1:11434`, memory
 `private/memory`, four style examples, 6000 style characters, 16000 conversation
 characters, eight previous thread messages, three generation attempts, seed 42,
 and temperature 0.2. Ollama receives a 16384-token context setting and a 2048-token
