@@ -129,11 +129,14 @@ def main(argv=None):
                 action = input(
                     "[e]dit / [r]egenerate / re[j]ect / [s]end review: "
                 ).lower()
+                
                 if action == "j":
                     return
+                
                 if action == "r":
                     intent = input("Updated reply intent: ")
                     break
+                
                 if action == "e":
                     print(
                         "Enter complete edited body. End with a line containing only a dot."
@@ -142,6 +145,7 @@ def main(argv=None):
                     while (line := input()) != ".":
                         lines.append(line)
                     body = "\n".join(lines)
+                    
                 if action == "s":
                     reply = reply_for(email, identity, body)
                     print("FINAL RECIPIENTS, SUBJECT, BODY:")
