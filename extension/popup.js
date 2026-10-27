@@ -1,4 +1,6 @@
 'use strict';
+
+
 const $ = id => document.getElementById(id);
 const API = 'http://127.0.0.1:8765';
 let selected = null;
@@ -12,7 +14,8 @@ async function api(path, body) {
   const response = await fetch(API + path, {
     method: 'POST', headers: {'Content-Type': 'application/json', Authorization: `Bearer ${pairingToken}`},
     body: JSON.stringify(body), credentials: 'omit', cache: 'no-store',
-    signal: AbortSignal.timeout(600000)
+    //added a 1000 second time-out to keep in account for the worst case in /generate
+    signal: AbortSignal.timeout(1000000)
   });
   const result = await response.json();
   if (!response.ok) throw new Error(result.error || 'Backend request failed.');
@@ -68,7 +71,7 @@ action('select', async () => {
     return [...document.querySelectorAll('[data-legacy-message-id]')]
       .filter(node => node.getClientRects().length)
       .map(node => ({id: node.getAttribute('data-legacy-message-id'),
-                     label: (node.innerText || '').slice(0, 90)}))
+      label: (node.innerText || '').slice(0, 90)}))
       .filter(item => /^[a-f0-9]+$/i.test(item.id));
   }});
   const unique = [...new Map(result.result.map(item => [item.id, item])).values()];
