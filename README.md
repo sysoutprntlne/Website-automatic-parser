@@ -1,4 +1,4 @@
-# Personalized Gmail reply assistant
+# AutoEmail.AI Personalized Gmail reply assistant
 
 ![Alt Text](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSr0w_v3bUxNRKZQvwMDWXL-wdsRFLpHWn7Jc-8mm1Gdg&s=10)
 
