@@ -1,6 +1,7 @@
 # Personalized Gmail reply assistant
 
-https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSr0w_v3bUxNRKZQvwMDWXL-wdsRFLpHWn7Jc-8mm1Gdg&s=10
+![Alt Text](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSr0w_v3bUxNRKZQvwMDWXL-wdsRFLpHWn7Jc-8mm1Gdg&s=10)
+
 
 Draft replies using a local Ollama model, Gmail API context, and confirmed sent
 messages retrieved from persistent Chroma memory. Personalization is RAG: model
